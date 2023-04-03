@@ -1,9 +1,59 @@
 import 'package:flutter/material.dart';
+import 'ConversationButton.dart';
+
+Map<String, dynamic> conversationMap = {
+  "conversations" : [
+    <String, dynamic> {
+      "conversationID" : "1234",
+      "title" : "Haily",
+      "lastMessage" : "I love you!",
+      "timestamp" : 123456789
+    },
+    <String, dynamic> {
+      "conversationID" : "4321",
+      "title" : "Mom",
+      "lastMessage" : "Love y'all",
+      "timestamp" : 987654321
+    },
+  ]
+};
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ConversationsScreen());
 }
 
+class ConversationsScreen extends StatelessWidget {
+  const ConversationsScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build (BuildContext context){
+    return MaterialApp(
+      title: 'Streaky',
+      home: Scaffold(
+        appBar: AppBar(),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              //Streak Widget
+              const SizedBox(
+                width: double.infinity,
+                height: 30,
+                child: Text("Example box")
+              ),
+              const Padding(padding: EdgeInsets.all(5)),
+              //Add new streak button
+              ButtonBar(
+
+              )
+            ],
+          )
+        )
+      )
+    );
+  }
+}
+/*
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -102,6 +152,9 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            const Image(
+              image: AssetImage("assets/HappyCat!.png")
+            )
           ],
         ),
       ),
@@ -113,3 +166,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+*/
