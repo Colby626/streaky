@@ -28,28 +28,55 @@ class ConversationsScreen extends StatelessWidget {
   @override
   Widget build (BuildContext context){
     return MaterialApp(
-      title: 'Streaky',
-      home: Scaffold(
-        appBar: AppBar(),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              //Streak Widget
-              const SizedBox(
-                width: double.infinity,
-                height: 30,
-                child: Text("Example box")
-              ),
-              const Padding(padding: EdgeInsets.all(5)),
-              //Add new streak button
-              ButtonBar(
+        title: 'Streaky',
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+                title: const Text("Streaky")
+            ),
+            body: Align(
+                alignment: Alignment.topCenter,
+                child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        //Streak Widget
 
+                        //Add new streak button
+                        const Padding(
+                          padding: EdgeInsets.all(5)
+                        ),
+                        ElevatedButton(
+                            child: const Text("Add new streak"),
+                            onPressed: (){} //Insert function to add a new streak widget above and open the add streak menu
+                        )
+                      ],
+                    )
+                )
+            ),
+            bottomNavigationBar: Container(
+              alignment: Alignment.bottomCenter,
+              margin: const EdgeInsets.all(5),
+              child: Row(
+                  children: [
+                    Align(
+                        alignment: Alignment.bottomLeft,
+                        child: ElevatedButton(
+                            child: const Text("Calendar"),
+                            onPressed: (){} //Insert function to open calendar menu
+                        )
+                    ),
+                    Align(
+                        alignment: Alignment.bottomRight,
+                        child: ElevatedButton(
+                            child: const Text("Settings"),
+                            onPressed: (){} //Insert function to open settings menu
+                        )
+                    )
+                  ]
               )
-            ],
-          )
+            )
         )
-      )
     );
   }
 }
