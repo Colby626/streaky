@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'ConversationButton.dart';
-
+import 'package:streaky/Streak.dart';
+import 'StreakButton.dart';
+import 'StreakData.dart' as streakData;
+/*
 Map<String, dynamic> conversationMap = {
   "conversations" : [
-    <String, dynamic> {
+    String, dynamic> {
       "conversationID" : "1234",
       "title" : "Haily",
       "lastMessage" : "I love you!",
@@ -14,17 +16,77 @@ Map<String, dynamic> conversationMap = {
       "title" : "Mom",
       "lastMessage" : "Love y'all",
       "timestamp" : 987654321
-    },
+    },<
   ]
 };
+*/
 
-void main() {
-  runApp(const ConversationsScreen());
+void main() => runApp(HomePage());
+
+class HomePage extends StatelessWidget {
+  HomePage({Key? key}) : super(key: key);
+
+  final number = ValueNotifier(0);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: "Streaky",
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: const Text("Streaky"),
+          ),
+          bottomNavigationBar: BottomAppBar(
+            color: Colors.blue,
+            child: Row(
+              children: [
+                IconButton(
+                    color: Colors.white,
+                    tooltip: "Calendar",
+                    icon: const Icon(Icons.calendar_month),
+                    onPressed: () {} //calendar goes here,
+                ),
+                IconButton(
+                  color: Colors.white,
+                  tooltip: "Settings",
+                  icon: const Icon(Icons.settings),
+                  onPressed: () {}, //settings goes here
+                )
+              ],
+            ),
+          ),
+          body: Align(
+              alignment: Alignment.topCenter,
+              child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      StreakButton("New Streak", number),
+                      ValueListenableBuilder<int>(
+                        valueListenable: number,
+                        builder: (BuildContext context, int value,
+                            Widget? child) {
+                          return Column(
+                            children: [
+                              for (int i = 0; i <
+                                  streakData.streaks.length; i++)
+                                Streak(streakData.streaks[i].name, streakData
+                                    .streaks[i].streakCount, Icons
+                                    .access_time_filled)
+                            ],
+                          );
+                        },
+                      ),
+                    ],
+                  )
+              )
+          ),
+        )
+    );
+  }
 }
-
-class ConversationsScreen extends StatelessWidget {
-  const ConversationsScreen({Key? key}) : super(key: key);
-
+/*
   @override
   Widget build (BuildContext context){
     return MaterialApp(
@@ -41,7 +103,7 @@ class ConversationsScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         //Streak Widget
-
+                        const ConversationButton("123", "title", "lastMessage"),
                         //Add new streak button
                         const Padding(
                           padding: EdgeInsets.all(5)
@@ -72,14 +134,14 @@ class ConversationsScreen extends StatelessWidget {
                             child: const Text("Settings"),
                             onPressed: (){} //Insert function to open settings menu
                         )
-                    )
+                    ),
                   ]
               )
             )
         )
     );
   }
-}
+}*/
 /*
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
