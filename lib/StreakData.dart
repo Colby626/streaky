@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 class StreakData
 {
   StreakData(this.name, this.streakCount);
@@ -6,3 +7,16 @@ class StreakData
 }
 
 List<StreakData> streaks = [];
+
+bool lightmode = false;
+
+ThemeData ThemeSelect()
+{
+    if (!lightmode)
+    {
+      return ThemeData.dark();
+    }
+    else{
+      return ThemeData.light();
+    }
+}
