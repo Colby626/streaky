@@ -8,7 +8,7 @@ class StreakData
   int streakCount = 0;
 }
 
-List<StreakData> streaks = [StreakData("brush teeth", 0, Schedule.Daily)];
+List<StreakData> streaks = [];
 
 bool lightmode = false;
 
