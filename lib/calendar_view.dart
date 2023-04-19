@@ -9,12 +9,13 @@ class CalendarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Calendar View',
+        title: "Streaky",
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
             centerTitle: true,
             title: const Text("Calendar View"),
+            automaticallyImplyLeading: true,
           ),
           body: SafeArea (
             minimum: const EdgeInsets.all(15),
@@ -30,7 +31,7 @@ class CalendarView extends StatelessWidget {
                     color: Colors.white,
                     tooltip: "Back",
                     icon: const Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () => Navigator.pop(context),
                   )
                 ]
             ),

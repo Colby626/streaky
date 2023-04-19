@@ -6,7 +6,14 @@ import 'StreakData.dart' as streakData;
 import 'SettingsMenu.dart';
 import 'calendar_view.dart';
 
-void main() => runApp(CalendarView());
+void main() => runApp(MaterialApp(
+  title: "Streaky Router",
+  initialRoute: '/',
+  routes: {
+    '/': (context) => HomePage(),
+    '/calendarView': (context) => const CalendarView(),
+  },
+));
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -39,10 +46,7 @@ class HomePage extends StatelessWidget {
                     tooltip: "Calendar",
                     icon: const Icon(Icons.calendar_month),
                     onPressed: () {
-                      Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CalendarView()),
-                      );
+                      Navigator.pushNamed(context, '/calendarView');
                     },
                 ),
                 IconButton(
