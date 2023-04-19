@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:streaky/StreakData.dart';
@@ -6,7 +7,7 @@ import 'StreakyEnums.dart';
 import 'StreakData.dart' as streakData;
 import 'ReadWriteStreak.dart';
 
-final TextEditingController controller = TextEditingController();
+TextEditingController controller = TextEditingController();
 
 
 class StreakForm extends StatefulWidget {
@@ -22,6 +23,12 @@ class StreakForm extends StatefulWidget {
 }
 
 class StreakFormState extends State<StreakForm> {
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -85,18 +92,6 @@ class StreakPopupState extends State<StreakPopup>{
           },
           child: const Text("Close"),
         ),
-        IconButton(
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      content: Text(controller.text),
-                    );
-                  }
-              );
-            },
-            icon: const Icon(Icons.access_alarm)),
         ElevatedButton(
             onPressed: (){
               //Create Streak on home screen
@@ -110,7 +105,6 @@ class StreakPopupState extends State<StreakPopup>{
             child: const Text("Create")
         )
       ],
-
     );
   }
 }
