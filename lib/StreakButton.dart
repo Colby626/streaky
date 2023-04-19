@@ -97,7 +97,7 @@ class StreakPopupState extends State<StreakPopup>{
             onPressed: (){
               //Create Streak on home screen
               setState(() {
-                streakData.streaks.add(StreakData(controller.text, 0));
+                streakData.streaks.add(StreakData(controller.text, 0, Schedule.Daily));
                 widget.event.value++;
                 Navigator.of(context).pop();
               });

@@ -1,9 +1,9 @@
 enum Schedule {
   Daily,
   Weekly,
-  Weekends,
   BiWeekly,
   Monthly,
+  Yearly,
   MWF,
   TR,
 }

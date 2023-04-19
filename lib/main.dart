@@ -3,8 +3,9 @@ import 'package:streaky/Streak.dart';
 import 'StreakButton.dart';
 import 'StreakData.dart' as streakData;
 import 'SettingsMenu.dart';
+import 'calendar_view.dart';
 
-void main() => runApp(HomePage());
+void main() => runApp(CalendarView());
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class HomePage extends StatelessWidget {
     return MaterialApp(
         title: "Streaky",
         debugShowCheckedModeBanner: false,
-        theme: ThemeData().prim,
+        //theme: ThemeData().prim, .prim is undefined
         home: Scaffold(
           endDrawerEnableOpenDragGesture: false,
           key: _scaffoldKey,
@@ -35,7 +36,12 @@ class HomePage extends StatelessWidget {
                     color: Colors.white,
                     tooltip: "Calendar",
                     icon: const Icon(Icons.calendar_month),
-                    onPressed: () {} //calendar goes here,
+                    onPressed: () {
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CalendarView()),
+                      );
+                    },
                 ),
                 IconButton(
                   color: Colors.white,
@@ -43,7 +49,7 @@ class HomePage extends StatelessWidget {
                   icon: const Icon(Icons.settings),
                   onPressed: () {
                     _scaffoldKey.currentState?.openDrawer();
-                  }, //settings goes here
+                  },
                 )
               ],
             ),
