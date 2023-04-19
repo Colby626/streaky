@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:streaky/StreakData.dart';
 import 'StreakyEnums.dart';
 import 'StreakData.dart' as streakData;
+import 'ReadWriteStreak.dart';
 
 final TextEditingController controller = TextEditingController();
+
 
 class StreakForm extends StatefulWidget {
   const StreakForm(
@@ -98,6 +102,7 @@ class StreakPopupState extends State<StreakPopup>{
               //Create Streak on home screen
               setState(() {
                 streakData.streaks.add(StreakData(controller.text, 0, Schedule.Daily));
+                WriteStreak(streaks);
                 widget.event.value++;
                 Navigator.of(context).pop();
               });

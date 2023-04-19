@@ -6,6 +6,11 @@ class StreakData
   String name = "";
   Schedule schedule = Schedule.Daily;
   int streakCount = 0;
+
+  Map toJson() => {
+    'name': name,
+    'streakCount': streakCount,
+  };
 }
 
 List<StreakData> streaks = [StreakData("brush teeth", 0, Schedule.Daily)];

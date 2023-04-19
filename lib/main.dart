@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:streaky/ReadWriteStreak.dart';
 import 'package:streaky/Streak.dart';
 import 'StreakButton.dart';
 import 'StreakData.dart' as streakData;
@@ -13,12 +14,13 @@ class HomePage extends StatelessWidget {
   final number = ValueNotifier(0);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  String streak = "";
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         title: "Streaky",
         debugShowCheckedModeBanner: false,
-        //theme: ThemeData().prim, .prim is undefined
         home: Scaffold(
           endDrawerEnableOpenDragGesture: false,
           key: _scaffoldKey,
@@ -66,6 +68,10 @@ class HomePage extends StatelessWidget {
                             Widget? child) {
                           return Column(
                             children: [
+                              FutureBuilder(
+                                future: ReadStreak(),
+                                builder: (BuildContext context, AsyncSnapshot<String> snap) {return Text('${snap.data}');},
+                              ),
                               for (int i = 0; i <
                                   streakData.streaks.length; i++)
                                 Streak(streakData.streaks[i].name, streakData
