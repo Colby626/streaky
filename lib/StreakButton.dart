@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
+//import 'dart:ffi'; causing a build error
 
 import 'package:flutter/material.dart';
 import 'package:streaky/StreakData.dart';
@@ -96,7 +96,7 @@ class StreakPopupState extends State<StreakPopup>{
             onPressed: (){
               //Create Streak on home screen
               setState(() {
-                streakData.streaks.add(StreakData(controller.text, 0, Schedule.Daily));
+                streakData.streaks.add(StreakData(controller.text, 0, startingValue));
                 WriteStreak(streaks);
                 widget.event.value++;
                 Navigator.of(context).pop();

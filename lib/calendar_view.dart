@@ -46,28 +46,16 @@ _AppointmentDataSource _getCalendarDataSource() {
   for (int i = 0; i < streakData.streaks.length; i++)
     {
       appointments.add(Appointment(
-        startTime: DateTime(2023, 4, 19),
-        endTime: DateTime(2023, 4, 19),
+        startTime: DateTime.now(),
+        endTime: DateTime.now(),
         subject: streakData.streaks[i].name,
         color: Colors.blue,
         startTimeZone: '',
         endTimeZone: '',
         isAllDay: true,
-        recurrenceRule: RecurranceString(streakData.streaks[i].schedule),
       ));
+      appointments[i].recurrenceRule = SfCalendar.generateRRule(RecurranceData(streakData.streaks[i].schedule), DateTime.now(), DateTime.now());
     }
-  /*
-  appointments.add(Appointment(
-    startTime: DateTime(2023, 4, 19),
-    endTime: DateTime(2023, 4, 19),
-    subject: 'Meeting',
-    color: Colors.blue,
-    startTimeZone: '',
-    endTimeZone: '',
-    isAllDay: true,
-    recurrenceRule: 'FREQ=DAILY;INTERVAL=2;COUNT=10',
-  ));
-  */
   return _AppointmentDataSource(appointments);
 }
 
@@ -77,54 +65,272 @@ class _AppointmentDataSource extends CalendarDataSource {
   }
 }
 
-String RecurranceString(Schedule schedule)
+RecurrenceProperties RecurranceData(Schedule schedule) //Will need Days day and DayOfMonth dayOfMonth and Month month
 {
-  String string = "";
+  RecurrenceProperties properties;
 
   switch (schedule)
   {
     case Schedule.Daily:
       {
-        string = "FREQ=DAILY;";
+        properties = RecurrenceProperties(
+          startDate: DateTime.now(),
+          recurrenceType: RecurrenceType.daily,
+          recurrenceRange: RecurrenceRange.noEndDate,
+        );
       }
       break;
 
-    case Schedule.Weekly:
+    case Schedule.Weekly: //currently doing daily since weekly doesn't work without a specific day in mind
       {
-        string = "FREQ=WEEKLY;";
+        /*
+        switch (Days.days)
+
+          case Days.Monday:
+          {
+            properties = RecurrenceProperties(
+            startDate: DateTime.now(),
+            recurrenceType: RecurrenceType.weekly,
+            weekDays: <WeekDays>[WeekDays.monday],
+            recurrenceRange: RecurrenceRange.noEndDate,
+          }
+          break;
+
+          case Days.Tuesday:
+          {
+            properties = RecurrenceProperties(
+            startDate: DateTime.now(),
+            recurrenceType: RecurrenceType.weekly,
+            weekDays: <WeekDays>[WeekDays.tuesday],
+            recurrenceRange: RecurrenceRange.noEndDate,
+          }
+          break;
+
+          case Days.Wednesday:
+          {
+            properties = RecurrenceProperties(
+            startDate: DateTime.now(),
+            recurrenceType: RecurrenceType.weekly,
+            weekDays: <WeekDays>[WeekDays.wednesday],
+            recurrenceRange: RecurrenceRange.noEndDate,
+          }
+          break;
+
+          case Days.Thursday:
+          {
+            properties = RecurrenceProperties(
+            startDate: DateTime.now(),
+            recurrenceType: RecurrenceType.weekly,
+            weekDays: <WeekDays>[WeekDays.thursday],
+            recurrenceRange: RecurrenceRange.noEndDate,
+          }
+          break;
+
+          case Days.Friday:
+          {
+            properties = RecurrenceProperties(
+            startDate: DateTime.now(),
+            recurrenceType: RecurrenceType.weekly,
+            weekDays: <WeekDays>[WeekDays.friday],
+            recurrenceRange: RecurrenceRange.noEndDate,
+          }
+          break;
+
+          case Days.Saturday:
+          {
+            properties = RecurrenceProperties(
+            startDate: DateTime.now(),
+            recurrenceType: RecurrenceType.weekly,
+            weekDays: <WeekDays>[WeekDays.saturday],
+            recurrenceRange: RecurrenceRange.noEndDate,
+          }
+          break;
+
+          case Days.Sunday:
+          {
+            properties = RecurrenceProperties(
+            startDate: DateTime.now(),
+            recurrenceType: RecurrenceType.weekly,
+            weekDays: <WeekDays>[WeekDays.sunday],
+            recurrenceRange: RecurrenceRange.noEndDate,
+          }
+          break;
+         */
+        //Whats between this comment and break will be removed when Days enum is factored into streak creation
+        properties = RecurrenceProperties(
+          startDate: DateTime.now(),
+          recurrenceType: RecurrenceType.daily,
+          recurrenceRange: RecurrenceRange.noEndDate,
+        );
+      }
+      break;
+
+    case Schedule.WeeklyOnMonday:
+      {
+        properties = RecurrenceProperties(
+          startDate: DateTime.now(),
+          interval: 1,
+          weekDays: <WeekDays>[WeekDays.monday],
+          recurrenceType: RecurrenceType.weekly,
+          recurrenceRange: RecurrenceRange.noEndDate,
+        );
+      }
+      break;
+
+    case Schedule.WeeklyOnTuesday:
+      {
+        properties = RecurrenceProperties(
+          startDate: DateTime.now(),
+          interval: 1,
+          weekDays: <WeekDays>[WeekDays.tuesday],
+          recurrenceType: RecurrenceType.weekly,
+          recurrenceRange: RecurrenceRange.noEndDate,
+        );
       }
       break;
 
     case Schedule.Monthly:
       {
-        string = "FREQ=MONTHLY;";
+        /*
+        properties = RecurrenceProperties(
+          startDate: DateTime.now(),
+          dayOfMonth = dayOfMonth,
+          recurrenceType: RecurrenceType.monthly,
+          recurrenceRange: RecurrenceRange.noEndDate,
+        );
+         */
+        properties = RecurrenceProperties(
+          startDate: DateTime.now(),
+          recurrenceType: RecurrenceType.monthly,
+          recurrenceRange: RecurrenceRange.noEndDate,
+        );
       }
       break;
 
     case Schedule.Yearly:
       {
-        string = "FREQ=YEARLY;";
+        /*
+        properties = RecurrenceProperties(
+          startDate: DateTime.now(),
+          dayOfMonth = dayOfMonth,
+          month = month,
+          recurrenceType: RecurrenceType.monthly,
+          recurrenceRange: RecurrenceRange.noEndDate,
+        );
+         */
+        properties = RecurrenceProperties(
+          startDate: DateTime.now(),
+          recurrenceType: RecurrenceType.yearly,
+          recurrenceRange: RecurrenceRange.noEndDate,
+        );
       }
       break;
 
     case Schedule.BiWeekly:
       {
-        string = "FREQ=WEEKLY;INTERVAL=2;";
+        /*
+        switch (Days.days)
+
+          case Days.Monday:
+          {
+            properties = RecurrenceProperties(
+            startDate: DateTime.now(),
+            recurrenceType: RecurrenceType.weekly,
+            weekDays: <WeekDays>[WeekDays.monday],
+            recurrenceRange: RecurrenceRange.noEndDate,
+          }
+          break;
+
+          case Days.Tuesday:
+          {
+            properties = RecurrenceProperties(
+            startDate: DateTime.now(),
+            recurrenceType: RecurrenceType.weekly,
+            weekDays: <WeekDays>[WeekDays.tuesday],
+            recurrenceRange: RecurrenceRange.noEndDate,
+          }
+          break;
+
+          case Days.Wednesday:
+          {
+            properties = RecurrenceProperties(
+            startDate: DateTime.now(),
+            recurrenceType: RecurrenceType.weekly,
+            weekDays: <WeekDays>[WeekDays.wednesday],
+            recurrenceRange: RecurrenceRange.noEndDate,
+          }
+          break;
+
+          case Days.Thursday:
+          {
+            properties = RecurrenceProperties(
+            startDate: DateTime.now(),
+            recurrenceType: RecurrenceType.weekly,
+            weekDays: <WeekDays>[WeekDays.thursday],
+            recurrenceRange: RecurrenceRange.noEndDate,
+          }
+          break;
+
+          case Days.Friday:
+          {
+            properties = RecurrenceProperties(
+            startDate: DateTime.now(),
+            recurrenceType: RecurrenceType.weekly,
+            weekDays: <WeekDays>[WeekDays.friday],
+            recurrenceRange: RecurrenceRange.noEndDate,
+          }
+          break;
+
+          case Days.Saturday:
+          {
+            properties = RecurrenceProperties(
+            startDate: DateTime.now(),
+            recurrenceType: RecurrenceType.weekly,
+            weekDays: <WeekDays>[WeekDays.saturday],
+            recurrenceRange: RecurrenceRange.noEndDate,
+          }
+          break;
+
+          case Days.Sunday:
+          {
+            properties = RecurrenceProperties(
+            startDate: DateTime.now(),
+            recurrenceType: RecurrenceType.weekly,
+            weekDays: <WeekDays>[WeekDays.sunday],
+            recurrenceRange: RecurrenceRange.noEndDate,
+          }
+          break;
+         */
+        //Below will be removed when Days are factored into streak creation
+        properties = RecurrenceProperties(
+          startDate: DateTime.now(),
+          recurrenceType: RecurrenceType.weekly,
+          interval: 2,
+          recurrenceRange: RecurrenceRange.noEndDate,
+        );
       }
       break;
 
     case Schedule.MWF:
       {
-        string = "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO,WE,FR";
+        properties = RecurrenceProperties(
+          startDate: DateTime.now(),
+          recurrenceType: RecurrenceType.weekly,
+          weekDays: <WeekDays>[WeekDays.monday, WeekDays.wednesday, WeekDays.friday],
+        );
       }
       break;
 
     case Schedule.TR:
       {
-        string = "FREQ=MONTHLY;INTERVAL=1;BYDAY=TU,TH";
+        properties = RecurrenceProperties(
+          startDate: DateTime.now(),
+          recurrenceType: RecurrenceType.weekly,
+          weekDays: <WeekDays>[WeekDays.tuesday, WeekDays.thursday],
+        );
       }
       break;
   }
 
-  return string;
+  return properties;
 }
