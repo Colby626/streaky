@@ -9,7 +9,6 @@ import 'ReadWriteStreak.dart';
 
 TextEditingController controller = TextEditingController();
 
-
 class StreakForm extends StatefulWidget {
   const StreakForm(
       this.fieldName,

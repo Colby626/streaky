@@ -162,8 +162,8 @@ class HomePage extends StatelessWidget {
                                 future: ReadStreak(),
                                 builder: (BuildContext context,
                                     AsyncSnapshot<String> snap) {
-                                  return Text('${snap.data}');
                                 },
+                                  return Text('${snap.data}');
                               ),
                               for (int i = 0; i <
                                   streakData.streaks.length; i++)
