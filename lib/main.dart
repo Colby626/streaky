@@ -4,12 +4,45 @@ import 'package:streaky/Streak.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+import 'notification_manager.dart';
 import 'StreakButton.dart';
 import 'StreakData.dart' as streakData;
 import 'SettingsMenu.dart';
 import 'calendar_view.dart';
 
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  NotificationManager().initNotification();
+  Workmanager().initialize(
+
+    // The top level function, aka callbackDispatcher
+      callbackDispatcher,
+
+      // If enabled it will post a notification whenever
+      // the task is running. Handy for debugging tasks
+      isInDebugMode: true
+  );
+  // Periodic task registration
+  Workmanager().registerPeriodicTask(
+    "2",
+
+    //This is the value that will be
+    // returned in the callbackDispatcher
+    "simplePeriodicTask",
+
+    // When no frequency is provided
+    // the default 15 minutes is set.
+    // Minimum frequency is 15 min.
+    // Android will automatically change
+    // your frequency to 15 min
+    // if you have configured a lower frequency.
+    frequency: const Duration(minutes: 1),
+  );
+
   runApp(MaterialApp(
   title: "Streaky Router",
   initialRoute: '/',
@@ -19,6 +52,54 @@ void main() {
   '/HomePage/calendarView': (context) => const CalendarView(),
   },
   ));
+}
+
+Future<void> _showNotification() async {
+  var androidDetails = const AndroidNotificationDetails(
+      'channelId',
+      'channelName',
+      importance: Importance.high);
+  var generalNotificationDetails =
+  const NotificationDetails();
+  await flutterLocalNotificationsPlugin.show(
+      0, 'Notification Title', 'Notification Body', generalNotificationDetails,
+      payload: 'Notification Payload');
+}
+
+void callbackDispatcher() {
+  Workmanager().executeTask((task, inputData) {
+
+    // initialise the plugin of flutter_local_notifications.
+    FlutterLocalNotificationsPlugin flip = FlutterLocalNotificationsPlugin();
+
+    // app_icon needs to be a added as a drawable
+    // resource to the Android head project.
+    var android = const AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    // initialise settings for both Android and iOS device.
+    var settings = const InitializationSettings();
+    flip.initialize(settings);
+    _showNotificationWithDefaultSound(flip);
+    return Future.value(true);
+  });
+}
+
+Future _showNotificationWithDefaultSound(flip) async {
+
+  // Show a notification after every 15 minute with the first
+  // appearance happening a minute after invoking the method
+  var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+      'your channel id',
+      'your channel name',
+      importance: Importance.high,
+      priority: Priority.high
+  );
+  // initialise channel platform for both Android and iOS device.
+  var platformChannelSpecifics = const NotificationDetails();
+  await flip.show(0, 'Streaky',
+      'Your are one step away to connect with Streaky',
+      platformChannelSpecifics, payload: 'Default_Sound'
+  );
 }
 
 class StartPage extends StatefulWidget {
@@ -132,7 +213,8 @@ class HomePage extends StatelessWidget {
                   tooltip: "Calendar",
                   icon: const Icon(Icons.calendar_month),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/HomePage/calendarView');
+                    //Navigator.pushNamed(context, '/HomePage/calendarView');
+                    NotificationManager().simpleNotificationShow();
                   },
                 ),
                 IconButton(
@@ -180,5 +262,20 @@ class HomePage extends StatelessWidget {
           ),
         )
     );
+  }
+
+  Future<void> zoneSchedule () async {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        'scheduled title',
+        'scheduled body',
+        tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+        const NotificationDetails(
+            android: AndroidNotificationDetails(
+                'your channel id', 'your channel name',
+                channelDescription: 'your channel description')),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime);
   }
 }
