@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:streaky/Streak.dart';
 import 'package:streaky/StreakData.dart';
+import 'StreakData.dart' as streakData;
 
 Future<String> get _localPath async {
   final directory = await getApplicationDocumentsDirectory();
@@ -18,19 +20,27 @@ Future<File> WriteStreak(List<StreakData> streaks) async {
   final file = await _localFile;
 
   // Write the file
+  print(file.writeAsString(jsonEncode(streaks)));
   return file.writeAsString(jsonEncode(streaks));
 }
 
-Future<String> ReadStreak() async {
+Future<String> ReadStreaks() async {
+  final file = await _localFile;
+  String contents = await file.readAsString();
+
   try {
     final file = await _localFile;
 
     // Read the file
-    final contents = await file.readAsString();
-
+     contents = await file.readAsString();
+     StreakData streak;
+     streak = json.decode(contents);
+     print(streak.name);
+    //streakData.streaks.add(json.decode(contents).map((data) => StreakData.fromJson(data)));
     return contents;
+
   } catch (e) {
     // If encountering an error, return 0
-    return "";
+    return "bad things";
   }
 }

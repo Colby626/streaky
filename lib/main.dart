@@ -101,13 +101,30 @@ Widget build(BuildContext context) {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => HomePageState();
 
   final number = ValueNotifier(0);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+}
 
-  String streak = "";
+class HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    FetchStreaks();
+  }
+
+  Future FetchStreaks() async {
+    setState(() {
+      ReadStreaks();
+      widget.number.value++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +133,7 @@ class HomePage extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           endDrawerEnableOpenDragGesture: false,
-          key: _scaffoldKey,
+          key: widget._scaffoldKey,
           appBar: AppBar(
             automaticallyImplyLeading: false,
             centerTitle: true,
@@ -140,7 +157,7 @@ class HomePage extends StatelessWidget {
                   tooltip: "Settings",
                   icon: const Icon(Icons.settings),
                   onPressed: () {
-                    _scaffoldKey.currentState?.openDrawer();
+                    widget._scaffoldKey.currentState?.openDrawer();
                   },
                 ),
               ],
@@ -151,25 +168,29 @@ class HomePage extends StatelessWidget {
               child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      StreakButton("New Streak", number),
+                      StreakButton("New Streak", widget.number),
                       ValueListenableBuilder<int>(
-                        valueListenable: number,
+                        valueListenable: widget.number,
                         builder: (BuildContext context, int value,
                             Widget? child) {
                           return Column(
                             children: [
                               FutureBuilder(
-                                future: ReadStreak(),
+                                future: ReadStreaks(),
                                 builder: (BuildContext context,
                                     AsyncSnapshot<String> snap) {
+                                  if (snap.hasData) {
+                                    return Text('${snap.data}');
+                                  }
+                                  else {
+                                    return const Text("no");
+                                  }
                                 },
-                                  return Text('${snap.data}');
                               ),
-                              for (int i = 0; i <
-                                  streakData.streaks.length; i++)
+                              for (int i = 0; i < streakData.streaks.length; i++)
                                 Streak(streakData.streaks[i].name, streakData
                                     .streaks[i].streakCount, Icons
-                                    .access_time_filled)
+                                    .access_time_filled),
                             ],
                           );
                         },
