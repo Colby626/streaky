@@ -230,8 +230,8 @@ class HomePageState extends State<HomePage> {
                   tooltip: "Calendar",
                   icon: const Icon(Icons.calendar_month),
                   onPressed: () {
-                    //Navigator.pushNamed(context, '/HomePage/calendarView');
-                    NotificationManager().simpleNotificationShow();
+                    Navigator.pushNamed(context, '/HomePage/calendarView');
+                    //NotificationManager().simpleNotificationShow();
                   },
                 ),
                 IconButton(

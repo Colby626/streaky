@@ -8,8 +8,6 @@ enum Schedule {
   BiWeekly,
   @JsonValue("Schedule.Monthly")
   Monthly,
-  WeeklyOnMonday,
-  WeeklyOnTuesday,
   @JsonValue("Schedule.Yearly")
   Yearly,
   @JsonValue("Schedule.MWF")
