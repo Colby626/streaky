@@ -23,30 +23,30 @@ class NotificationManager {
     );
   }
 
-  Future<void> simpleNotificationShow() async {
+  Future<void> simpleNotificationShow(String name) async {
     AndroidNotificationDetails androidNotificationDetails =
-    const AndroidNotificationDetails('Channel_id', 'Channel_title',
+    AndroidNotificationDetails(name, name,
         priority: Priority.high,
         importance: Importance.max,
         icon: 'streaky_logo',
         channelShowBadge: true,
-        largeIcon: DrawableResourceAndroidBitmap('streaky_logo'));
+        largeIcon: const DrawableResourceAndroidBitmap('streaky_logo'));
 
     NotificationDetails notificationDetails =
     NotificationDetails(android: androidNotificationDetails);
     await notificationsPlugin.show(
-        0, 'Simple Notification', 'New User send message', notificationDetails);
+        0, 'Streak Notification', 'You need to do your $name streak!', notificationDetails);
   }
 
   Future<void> bigPictureNotificationShow() async {
     BigPictureStyleInformation bigPictureStyleInformation =
     const BigPictureStyleInformation(
         DrawableResourceAndroidBitmap('streaky_logo'),
-        contentTitle: 'Code Compilee',
+        contentTitle: 'Streaky Streaks',
         largeIcon: DrawableResourceAndroidBitmap('streaky_logo'));
 
     AndroidNotificationDetails androidNotificationDetails =
-    AndroidNotificationDetails('big_picture_id', 'big_picture_title',
+    AndroidNotificationDetails('big_picture_id', 'Streaky Streaks',
         priority: Priority.high,
         importance: Importance.max,
         styleInformation: bigPictureStyleInformation);
@@ -54,26 +54,26 @@ class NotificationManager {
     NotificationDetails notificationDetails =
     NotificationDetails(android: androidNotificationDetails);
     await notificationsPlugin.show(
-        1, 'Big Picture Notification', 'New Message', notificationDetails);
+        1, 'Big Streak Notification', 'Streaky Streaks', notificationDetails);
   }
 
   Future<void> multipleNotificationShow() async {
     AndroidNotificationDetails androidNotificationDetails =
-    const AndroidNotificationDetails('Channel_id', 'Channel_title',
+    const AndroidNotificationDetails('Channel_id', 'Streaky Streaks',
         priority: Priority.high,
         importance: Importance.max,
-        groupKey: 'commonMessage');
+        groupKey: 'Streaky Streaks');
 
     NotificationDetails notificationDetails =
     NotificationDetails(android: androidNotificationDetails);
     notificationsPlugin.show(
-        0, 'New Notification', 'User 1 send message', notificationDetails);
+        0, 'Streak Notification', 'You have a streak to complete', notificationDetails);
 
     Future.delayed(
       const Duration(milliseconds: 1000),
           () {
         notificationsPlugin.show(
-            1, 'New Notification', 'User 2 send message', notificationDetails);
+            1, 'Streak Notification', 'You have a streak to complete', notificationDetails);
       },
     );
 
@@ -81,18 +81,18 @@ class NotificationManager {
       const Duration(milliseconds: 1500),
           () {
         notificationsPlugin.show(
-            2, 'New Notification', 'User 3 send message', notificationDetails);
+            2, 'Streak Notification', 'You have a streak to complete', notificationDetails);
       },
     );
 
     List<String> lines = ['user1', 'user2', 'user3'];
 
     InboxStyleInformation inboxStyleInformation =
-    InboxStyleInformation(lines, contentTitle: '${lines.length} messages',summaryText: 'Code Compilee');
+    InboxStyleInformation(lines, contentTitle: '${lines.length} messages',summaryText: 'Streaky Streaks');
 
     AndroidNotificationDetails androidNotificationSpesific=AndroidNotificationDetails(
-        'groupChennelId',
-        'groupChennelTitle',
+        'groupChannelId',
+        'Streaky Streaks',
         styleInformation: inboxStyleInformation,
         groupKey: 'commonMessage',
         setAsGroupSummary: true

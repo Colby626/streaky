@@ -8,10 +8,6 @@ enum Schedule {
   Monthly,
   @JsonValue("Schedule.Yearly")
   Yearly,
-  @JsonValue("Schedule.MWF")
-  MWF,
-  @JsonValue("Schedule.TR")
-  TR,
 }
 
 enum Days {

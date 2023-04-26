@@ -187,26 +187,6 @@ RecurrenceProperties RecurranceData(streakData) //Will need Days day and DayOfMo
         );
       }
       break;
-
-    case Schedule.MWF:
-      {
-        properties = RecurrenceProperties(
-          startDate: DateTime.now(),
-          recurrenceType: RecurrenceType.weekly,
-          weekDays: <WeekDays>[WeekDays.monday, WeekDays.wednesday, WeekDays.friday],
-        );
-      }
-      break;
-
-    case Schedule.TR:
-      {
-        properties = RecurrenceProperties(
-          startDate: DateTime.now(),
-          recurrenceType: RecurrenceType.weekly,
-          weekDays: <WeekDays>[WeekDays.tuesday, WeekDays.thursday],
-        );
-      }
-      break;
   }
 
   return properties;

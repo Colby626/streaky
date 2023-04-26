@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:streaky/StreakData.dart';
+import 'package:workmanager/workmanager.dart';
 import 'StreakyEnums.dart';
 import 'StreakData.dart' as streakData;
 import 'ReadWriteStreak.dart';
@@ -123,6 +124,29 @@ class StreakPopupState extends State<StreakPopup>{
                   }
                 WriteStreak(streaks);
                 widget.event.value++;
+                switch(selectedSchedule)
+                {
+                  case Schedule.Daily:
+                    {
+                      Workmanager().registerPeriodicTask(selectedSchedule.name, selectedSchedule.name, frequency: const Duration(seconds: 15)); //will change to once a day, seconds are for testing
+                    }
+                    break;
+                  case Schedule.Weekly:
+                    {
+                      Workmanager().registerPeriodicTask(selectedSchedule.name, selectedSchedule.name, frequency: const Duration(days: 7));
+                    }
+                    break;
+                  case Schedule.Monthly:
+                    {
+                      Workmanager().registerPeriodicTask(selectedSchedule.name, selectedSchedule.name, frequency: const Duration(days: 31)); //doesn't account for different length months
+                    }
+                    break;
+                  case Schedule.Yearly:
+                    {
+                      Workmanager().registerPeriodicTask(selectedSchedule.name, selectedSchedule.name, frequency: const Duration(days: 365)); //doesn't account for leap years
+                    }
+                    break;
+                }
                 Navigator.of(context).pop();
               });
             },
