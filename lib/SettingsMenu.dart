@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:streaky/ThemeModeSwitch.dart';
+import 'package:streaky/config.dart';
+//import 'package:streaky/ThemeModeSwitch.dart';
 
 class SettingsMenu extends StatelessWidget{
-  const SettingsMenu(
+  SettingsMenu(
   {Key? key}
       ) : super(key: key);
+  final ValueNotifier<ThemeMode> _notifier = ValueNotifier(ThemeMode.light);
 
   @override
   Widget build(BuildContext context)
@@ -12,8 +14,8 @@ class SettingsMenu extends StatelessWidget{
     return Drawer(
       width: 200,
       child: ListView(
-        children: const [
-          DrawerHeader(
+        children:  [
+          const DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.blue,
             ),
@@ -22,11 +24,19 @@ class SettingsMenu extends StatelessWidget{
               child: Text("Settings", style: TextStyle(fontSize: 37, color: Colors.white),),
             )
           ),
-          Align(
+          const Align(
             alignment: Alignment.center,
             child: Text("Theme Mode"),
           ),
-          ThemeModeSwitch(),
+          Switch(
+            value: true,
+            activeColor: Colors.deepPurpleAccent,
+            onChanged: (bool value) {
+              currentTheme.switchThemes();
+              value: !value;
+            }
+          )
+          //ThemeModeSwitch(),
         ],
       ),
     );

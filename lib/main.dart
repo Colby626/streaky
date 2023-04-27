@@ -11,6 +11,7 @@ import 'StreakData.dart' as streakData;
 import 'StreakyEnums.dart';
 import 'SettingsMenu.dart';
 import 'calendar_view.dart';
+import 'config.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -52,41 +53,6 @@ void callbackDispatcher() {
     var settings = const InitializationSettings();
     flip.initialize(settings);
     NotificationManager().simpleNotificationShow(taskName);
-
-    /*
-    Schedule selectedSchedule = Schedule.Daily;
-    for (int i = 0; i < streakData.streaks.length; i++)
-      {
-        if (streakData.streaks[i].name == taskName)
-        {
-          selectedSchedule = streakData.streaks[i].schedule;
-          break;
-        }
-      }
-
-    switch (selectedSchedule) {
-      case Schedule.Daily:
-        {
-          NotificationManager().simpleNotificationShow(taskName);
-        }
-        break;
-      case Schedule.Weekly:
-        {
-          NotificationManager().simpleNotificationShow(taskName);
-        }
-        break;
-      case Schedule.Monthly:
-        {
-          NotificationManager().simpleNotificationShow(taskName);
-        }
-        break;
-      case Schedule.Yearly:
-        {
-          NotificationManager().simpleNotificationShow(taskName);
-        }
-        break;
-    }
-    */
     return Future.value(true);
   });
 }
@@ -185,6 +151,11 @@ class HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    currentTheme.addListener((){
+      setState(() {
+
+      });
+    });
     super.initState();
     FetchStreaks();
   }
@@ -201,6 +172,9 @@ class HomePageState extends State<HomePage> {
     return MaterialApp(
         title: "Streaky",
         debugShowCheckedModeBanner: false,
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        themeMode: currentTheme.currentTheme(),
         home: Scaffold(
           endDrawerEnableOpenDragGesture: false,
           key: widget._scaffoldKey,
@@ -209,7 +183,7 @@ class HomePageState extends State<HomePage> {
             centerTitle: true,
             title: const Text("Streaky"),
           ),
-          drawer: const SettingsMenu(),
+          drawer: SettingsMenu(),
           bottomNavigationBar: BottomAppBar(
             color: Colors.blue,
             child: Row(
