@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:streaky/ReadWriteStreak.dart';
 import 'package:streaky/Streak.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -7,6 +8,7 @@ import 'package:workmanager/workmanager.dart';
 import 'notification_manager.dart';
 import 'StreakButton.dart';
 import 'StreakData.dart' as streakData;
+import 'StreakyEnums.dart';
 import 'SettingsMenu.dart';
 import 'calendar_view.dart';
 
@@ -38,7 +40,7 @@ void main() {
 
 @pragma('vm:entry-point')
 void callbackDispatcher() {
-  Workmanager().executeTask((task, inputData) async {
+  Workmanager().executeTask((taskName, inputData) async {
     // initialise the plugin of flutter_local_notifications.
     FlutterLocalNotificationsPlugin flip = FlutterLocalNotificationsPlugin();
 
@@ -49,29 +51,42 @@ void callbackDispatcher() {
     // initialise settings for both Android and iOS device.
     var settings = const InitializationSettings();
     flip.initialize(settings);
+    NotificationManager().simpleNotificationShow(taskName);
 
-    switch (task) {
-      case 'Daily':
+    /*
+    Schedule selectedSchedule = Schedule.Daily;
+    for (int i = 0; i < streakData.streaks.length; i++)
+      {
+        if (streakData.streaks[i].name == taskName)
         {
-          NotificationManager().simpleNotificationShow('Daily');
+          selectedSchedule = streakData.streaks[i].schedule;
+          break;
+        }
+      }
+
+    switch (selectedSchedule) {
+      case Schedule.Daily:
+        {
+          NotificationManager().simpleNotificationShow(taskName);
         }
         break;
-      case 'Weekly':
+      case Schedule.Weekly:
         {
-          NotificationManager().simpleNotificationShow('Weekly');
+          NotificationManager().simpleNotificationShow(taskName);
         }
         break;
-      case 'Monthly':
+      case Schedule.Monthly:
         {
-          NotificationManager().simpleNotificationShow('Monthly');
+          NotificationManager().simpleNotificationShow(taskName);
         }
         break;
-      case 'Yearly':
+      case Schedule.Yearly:
         {
-          NotificationManager().simpleNotificationShow('Yearly');
+          NotificationManager().simpleNotificationShow(taskName);
         }
         break;
     }
+    */
     return Future.value(true);
   });
 }
