@@ -81,7 +81,7 @@ RecurrenceProperties RecurranceData(streakData) //Will need Days day and DayOfMo
       }
       break;
 
-    case Schedule.Weekly: //currently doing daily since weekly doesn't work without a specific day in mind
+    case Schedule.Weekly:
       {
         switch (streakData.days) {
           case Days.Monday:
@@ -182,7 +182,7 @@ RecurrenceProperties RecurranceData(streakData) //Will need Days day and DayOfMo
           startDate: DateTime.now(),
           dayOfMonth: streakData.dayOfMonth,
           month: streakData.month,
-          recurrenceType: RecurrenceType.monthly,
+          recurrenceType: RecurrenceType.yearly,
           recurrenceRange: RecurrenceRange.noEndDate,
         );
       }

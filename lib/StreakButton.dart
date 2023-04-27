@@ -10,6 +10,9 @@ import 'ReadWriteStreak.dart';
 
 TextEditingController nameController = TextEditingController();
 TextEditingController monthController = TextEditingController();
+TextEditingController yearController = TextEditingController();
+
+Days selectedDay = Days.Monday;
 
 class StreakForm extends StatefulWidget {
   const StreakForm(
@@ -58,8 +61,9 @@ class StreakPopup extends StatefulWidget{
 
 class StreakPopupState extends State<StreakPopup>{
   Schedule selectedSchedule = Schedule.Daily;
-  Days selectedDay = Days.Monday;
+  //Days selectedDay = Days.Monday;
   int dayOfMonth = 0;
+  int month = 0;
 
   @override
   Widget build(BuildContext context){
@@ -86,7 +90,7 @@ class StreakPopupState extends State<StreakPopup>{
                 });
               }
           ),
-          DaysDropdown(selectedSchedule, selectedDay, dayOfMonth)
+          DaysDropdown(selectedSchedule, dayOfMonth, month)
         ],
       ),
       actions: [
@@ -114,6 +118,15 @@ class StreakPopupState extends State<StreakPopup>{
                       schedule: selectedSchedule,
                       dayOfMonth: int.parse(monthController.text))
                     );
+                  }
+                  else if (selectedSchedule == Schedule.Yearly){
+                    streakData.streaks.add(StreakData(
+                      name : nameController.text,
+                      streakCount: 0,
+                      schedule: selectedSchedule,
+                      dayOfMonth: int.parse(monthController.text),
+                      month: int.parse(yearController.text)
+                    ));
                   }
                   else{
                     streakData.streaks.add(StreakData(
@@ -189,13 +202,13 @@ class StreakButton extends StatelessWidget{
 }
 
 class DaysDropdown extends StatefulWidget {
-  Days selectedDay;
   Schedule schedule;
   int dayOfMonth;
+  int month;
   DaysDropdown(
       this.schedule,
-      this.selectedDay,
       this.dayOfMonth,
+      this.month,
       {super.key}
       );
 
@@ -208,12 +221,14 @@ class DaysDropdownState extends State<DaysDropdown>{
   void initState() {
     super.initState();
     monthController = TextEditingController();
+    yearController = TextEditingController();
   }
 
   @override
   void dispose(){
     super.dispose();
     monthController.dispose();
+    yearController.dispose();
   }
 
   @override
@@ -221,7 +236,7 @@ class DaysDropdownState extends State<DaysDropdown>{
     if (widget.schedule == Schedule.Weekly)
     {
       return DropdownButton(
-          value: widget.selectedDay,
+          value: selectedDay,
           icon: const Icon(Icons.arrow_drop_down),
           hint: const Text("Starting Day"),
           items: Days.values.map((Days days)
@@ -233,7 +248,7 @@ class DaysDropdownState extends State<DaysDropdown>{
           }).toList(),
           onChanged: (Days? newDay){
             setState(() {
-              widget.selectedDay = newDay!;
+              selectedDay = newDay!;
             });
           }
       );
@@ -263,23 +278,24 @@ class DaysDropdownState extends State<DaysDropdown>{
     {
       return Column(
       children:[
-          DropdownButton(
-            value: widget.selectedDay,
-            icon: const Icon(Icons.arrow_drop_down),
-            hint: const Text("Starting Day"),
-            items: Days.values.map((Days days)
-            {
-              return DropdownMenuItem(
-                value: days,
-                child: Text(days.name),
-              );
-            }).toList(),
-            onChanged: (Days? newDay){
-              setState(() {
-                widget.selectedDay = newDay!;
-              });
+        TextFormField(
+          autovalidateMode: AutovalidateMode.always,
+          decoration: const InputDecoration(
+            icon: Icon(Icons.calendar_month),
+            hintText: "What month?",
+          ),
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly
+          ],
+          controller: yearController,
+          validator: (value){
+            if (value == null || value.isEmpty || int.parse(value) > 12 || int.parse(value) < 1){
+              return 'Enter Month 1-12';
             }
-         ),
+            return null;
+          },
+        ),
         TextFormField(
           autovalidateMode: AutovalidateMode.always,
           decoration: const InputDecoration(
