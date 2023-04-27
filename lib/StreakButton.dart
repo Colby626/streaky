@@ -128,22 +128,22 @@ class StreakPopupState extends State<StreakPopup>{
                 {
                   case Schedule.Daily:
                     {
-                      Workmanager().registerPeriodicTask(nameController.text, selectedSchedule.name, frequency: const Duration(seconds: 15)); //will change to once a day, seconds are for testing
+                      Workmanager().registerPeriodicTask(nameController.text, nameController.text, frequency: const Duration(days: 1)); //will change to once a day, seconds are for testing
                     }
                     break;
                   case Schedule.Weekly:
                     {
-                      Workmanager().registerPeriodicTask(nameController.text, selectedSchedule.name, frequency: const Duration(days: 7));
+                      Workmanager().registerPeriodicTask(nameController.text, nameController.text, frequency: const Duration(days: 7));
                     }
                     break;
                   case Schedule.Monthly:
                     {
-                      Workmanager().registerPeriodicTask(nameController.text, selectedSchedule.name, frequency: const Duration(days: 31)); //doesn't account for different length months
+                      Workmanager().registerPeriodicTask(nameController.text, nameController.text, frequency: const Duration(days: 31)); //doesn't account for different length months
                     }
                     break;
                   case Schedule.Yearly:
                     {
-                      Workmanager().registerPeriodicTask(nameController.text, selectedSchedule.name, frequency: const Duration(days: 365)); //doesn't account for leap years
+                      Workmanager().registerPeriodicTask(nameController.text, nameController.text, frequency: const Duration(days: 365)); //doesn't account for leap years
                     }
                     break;
                 }
