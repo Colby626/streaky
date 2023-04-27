@@ -259,6 +259,48 @@ class DaysDropdownState extends State<DaysDropdown>{
           },
         );
       }
+    else if (widget.schedule == Schedule.Yearly)
+    {
+      return Column(
+      children:[
+          DropdownButton(
+            value: widget.selectedDay,
+            icon: const Icon(Icons.arrow_drop_down),
+            hint: const Text("Starting Day"),
+            items: Days.values.map((Days days)
+            {
+              return DropdownMenuItem(
+                value: days,
+                child: Text(days.name),
+              );
+            }).toList(),
+            onChanged: (Days? newDay){
+              setState(() {
+                widget.selectedDay = newDay!;
+              });
+            }
+         ),
+        TextFormField(
+          autovalidateMode: AutovalidateMode.always,
+          decoration: const InputDecoration(
+            icon: Icon(Icons.calendar_month),
+            hintText: "What day of the month?",
+            ),
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly
+          ],
+          controller: monthController,
+          validator: (value){
+            if (value == null || value.isEmpty || int.parse(value) > 31 || int.parse(value) < 1){
+              return 'Enter Day 1-31';
+            }
+            return null;
+          },
+        )
+      ]
+      );
+    }
     else {
       return const SizedBox.shrink();
     }
