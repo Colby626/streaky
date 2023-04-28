@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:streaky/delete_menu.dart';
 import 'StreakData.dart' as streakData;
 
 class Streak extends StatelessWidget{
@@ -38,7 +39,9 @@ class Streak extends StatelessWidget{
                 }
             }
         },
-        //onLongPress: deleteMenu,
+        onLongPress: () {
+          // show the deleteMenu
+        },
         child: Row(
           children: [
             Align(
