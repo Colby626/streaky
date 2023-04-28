@@ -1,4 +1,9 @@
+import 'dart:convert';
 import 'package:streaky/StreakyEnums.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'StreakData.g.dart';
+
+@JsonSerializable()
 class StreakData
 {
   StreakData({required this.name, required this.streakCount, required this.schedule, this.days = Days.Monday, this.dayOfMonth = 1, this.month = 1, this.streakDone = false}); //{required this.streakCount}, {required this.schedule}, {this.days = Days.Monday, this.dayOfMonth = 1, this.month = 1});
@@ -10,25 +15,9 @@ class StreakData
   int streakCount = 0;
   bool streakDone = false;
 
-  Map<String, dynamic> toJson() => {
-    'name': name.toString(),
-    'streakCount': streakCount.toString(),
-    'schedule': schedule.toString(),
-    'days': days.toString(),
-    'dayOfMonth': dayOfMonth.toString(),
-    'month': month.toString()
-  };
+  Map<String, dynamic> toJson() => _$StreakDataToJson(this);
 
-  factory StreakData.fromJson(Map<String, dynamic> json) {
-    return StreakData(
-      name: json['name'] ?? "",
-      streakCount: int.parse(json['streakCount']) ?? 0,
-      schedule: json['schedule'],
-      days: json['days'],
-      dayOfMonth: int.parse(json['dayOfMonth']) ?? 1,
-      month: int.parse(json['month']) ?? 1
-    );
-  }
+  factory StreakData.fromJson(Map<String, dynamic> json) => _$StreakDataFromJson(json);
 }
 
 List<StreakData> streaks = [];
