@@ -8,7 +8,6 @@ import 'package:workmanager/workmanager.dart';
 import 'notification_manager.dart';
 import 'StreakButton.dart';
 import 'StreakData.dart' as streakData;
-import 'StreakyEnums.dart';
 import 'SettingsMenu.dart';
 import 'calendar_view.dart';
 import 'config.dart';
@@ -19,13 +18,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationManager().initNotification();
   Workmanager().initialize(
-
-    // The top level function, aka callbackDispatcher
       callbackDispatcher,
-
-      // If enabled it will post a notification whenever
-      // the task is running. Handy for debugging tasks
-      //isInDebugMode: true
   );
 
   runApp(MaterialApp(
@@ -52,7 +45,16 @@ void callbackDispatcher() {
     // initialise settings for both Android and iOS device.
     var settings = const InitializationSettings();
     flip.initialize(settings);
-    NotificationManager().simpleNotificationShow(taskName);
+
+    for (int i = 0; i < streakData.streaks.length; i++)
+      {
+        if (taskName == streakData.streaks[i].name)
+          {
+            NotificationManager().simpleNotificationShow(taskName);
+            streakData.streaks[i].streakDone = false;
+            break;
+          }
+      }
     return Future.value(true);
   });
 }
@@ -234,7 +236,7 @@ class HomePageState extends State<HomePage> {
                               for (int i = 0; i < streakData.streaks.length; i++)
                                 Streak(streakData.streaks[i].name, streakData
                                     .streaks[i].streakCount, Icons
-                                    .access_time_filled),
+                                    .access_time_filled, streakData.streaks[i].schedule.name),
                             ],
                           );
                         },

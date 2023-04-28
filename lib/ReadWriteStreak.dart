@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'package:streaky/Streak.dart';
 import 'package:streaky/StreakData.dart';
-import 'StreakData.dart' as streakData;
 
 Future<String> get _localPath async {
   final directory = await getApplicationDocumentsDirectory();

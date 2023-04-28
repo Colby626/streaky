@@ -1,5 +1,3 @@
-//import 'dart:ffi'; causing a build error
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:streaky/StreakData.dart';
@@ -61,7 +59,6 @@ class StreakPopup extends StatefulWidget{
 
 class StreakPopupState extends State<StreakPopup>{
   Schedule selectedSchedule = Schedule.Daily;
-  //Days selectedDay = Days.Monday;
   int dayOfMonth = 0;
   int month = 0;
 
@@ -141,7 +138,7 @@ class StreakPopupState extends State<StreakPopup>{
                 {
                   case Schedule.Daily:
                     {
-                      Workmanager().registerPeriodicTask(nameController.text, nameController.text, frequency: const Duration(days: 1)); //will change to once a day, seconds are for testing
+                      Workmanager().registerPeriodicTask(nameController.text, nameController.text, initialDelay: const Duration (days: 1)); //minutes are for testing, will be days: 1
                     }
                     break;
                   case Schedule.Weekly:
