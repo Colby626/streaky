@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streaky/StreakyEnums.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'StreakData.g.dart';
@@ -19,5 +20,7 @@ class StreakData
 
   factory StreakData.fromJson(Map<String, dynamic> json) => _$StreakDataFromJson(json);
 }
+
+Future<SharedPreferences> prefs = SharedPreferences.getInstance();
 
 List<StreakData> streaks = [];

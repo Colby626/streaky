@@ -132,7 +132,7 @@ class StreakPopupState extends State<StreakPopup>{
                         schedule: selectedSchedule)
                     );
                   }
-                WriteStreak(streaks);
+                WriteStreak("streaks");
                 widget.event.value++;
                 switch(selectedSchedule)
                 {

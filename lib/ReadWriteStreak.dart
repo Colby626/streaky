@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:streaky/StreakData.dart';
+import 'package:streaky/StreakData.dart' as streakData;
+import 'StreakData.dart';
 
 // Future<String> get _localPath async {
 //   final directory = await getApplicationDocumentsDirectory();
@@ -15,7 +17,8 @@ import 'package:streaky/StreakData.dart';
 //   return File('$path/streaks.json');
 // }
 
-void WriteStreak(SharedPreferences prefs, String key) {
+void WriteStreak(String key) async {
+  SharedPreferences prefs = await streakData.prefs;
   List<String> streaksAsStrings = [];
   for(StreakData streak in streaks){
     streaksAsStrings.add(jsonEncode(streak));
@@ -23,12 +26,18 @@ void WriteStreak(SharedPreferences prefs, String key) {
   prefs.setStringList(key, streaksAsStrings);
 }
 
-void ReadStreaks(SharedPreferences prefs, String key) {
-  streaks.clear();
-  for(int i = 0; i < prefs.getStringList(key)!.length; i++){
-    streaks.add(jsonDecode(prefs.getStringList(key)![i]));
+Future<int> ReadStreaks(String key) async {
+  try {
+    SharedPreferences prefs = await streakData.prefs;
+    streaks.clear();
+    for (int i = 0; i < prefs.getStringList(key)!.length; i++) {
+      streaks.add(jsonDecode(prefs.getStringList(key)![i]));
+    }
+    return streaks.length;
   }
-
+  catch(e) {
+    return -1;
+  }
   // final file = await _localFile;
   // String contents = await file.readAsString();
   //

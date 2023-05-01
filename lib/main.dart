@@ -164,7 +164,7 @@ class HomePageState extends State<HomePage> {
 
   Future FetchStreaks() async {
     setState(() {
-      ReadStreaks();
+      ReadStreaks("streaks");
       widget.number.value++;
     });
   }
@@ -222,9 +222,9 @@ class HomePageState extends State<HomePage> {
                           return Column(
                             children: [
                               FutureBuilder(
-                                future: ReadStreaks(),
+                                future: ReadStreaks("streaks"),
                                 builder: (BuildContext context,
-                                    AsyncSnapshot<String> snap) {
+                                    AsyncSnapshot<int> snap) {
                                   if (snap.hasData) {
                                     return Text('${snap.data}');
                                   }
