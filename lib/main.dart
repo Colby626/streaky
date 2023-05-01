@@ -138,13 +138,14 @@ Widget build(BuildContext context) {
   }
 }
 
+final number = ValueNotifier(0);
+
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => HomePageState();
 
-  final number = ValueNotifier(0);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 }
 
@@ -166,7 +167,7 @@ class HomePageState extends State<HomePage> {
   void FetchStreaks() async {
     setState(() {
       ReadStreaks("streaks");
-      widget.number.value++;
+      number.value++;
     });
   }
 
@@ -215,9 +216,9 @@ class HomePageState extends State<HomePage> {
               child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      StreakButton("New Streak", widget.number),
+                      StreakButton("New Streak", number),
                       ValueListenableBuilder<int>(
-                        valueListenable: widget.number,
+                        valueListenable: number,
                         builder: (BuildContext context, int value,
                             Widget? child) {
                           return Column(
