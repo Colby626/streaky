@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:streaky/ReadWriteStreak.dart';
 import 'package:streaky/delete_menu.dart';
+import 'package:workmanager/workmanager.dart';
 import 'StreakData.dart' as streakData;
 
 class Streak extends StatelessWidget{
@@ -79,9 +81,28 @@ class Streak extends StatelessWidget{
                 }
             }
         },
-        onLongPress: () {
-          // show the deleteMenu
-        },
+        onLongPress: () => showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: const Text("Delete Streak?"),
+              content: const Text("Once a Streak has been deleted it will be removed from your calendar and can never be recovered"),
+              actions: [
+                TextButton(
+                  child: const Text("Confirm"),
+                  onPressed: (){
+                    streakData.streaks.removeWhere((element) => element.name == name);
+                    WriteStreak("streaks");
+                    Workmanager().cancelByUniqueName(name);
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text("Cancel")
+                )
+              ],
+            )
+        ),
         child: Row(
           children: [
             Align(

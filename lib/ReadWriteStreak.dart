@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streaky/StreakData.dart' as streakData;
 import 'StreakData.dart';
 import 'dart:developer' as developer;
+import 'main.dart';
 
 import 'StreakyEnums.dart';
 
@@ -27,6 +28,7 @@ void WriteStreak(String key) async {
     streaksAsStrings.add(jsonEncode(streak));
   }
   prefs.setStringList(key, streaksAsStrings);
+  number.value++;
 }
 
 Future ReadStreaks(String key) async {
