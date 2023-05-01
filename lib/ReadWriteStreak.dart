@@ -5,6 +5,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streaky/StreakData.dart' as streakData;
 import 'StreakData.dart';
+import 'dart:developer' as developer;
+
+import 'StreakyEnums.dart';
 
 // Future<String> get _localPath async {
 //   final directory = await getApplicationDocumentsDirectory();
@@ -26,18 +29,22 @@ void WriteStreak(String key) async {
   prefs.setStringList(key, streaksAsStrings);
 }
 
-Future<int> ReadStreaks(String key) async {
-  try {
-    SharedPreferences prefs = await streakData.prefs;
-    streaks.clear();
-    for (int i = 0; i < prefs.getStringList(key)!.length; i++) {
-      streaks.add(jsonDecode(prefs.getStringList(key)![i]));
-    }
-    return streaks.length;
+Future ReadStreaks(String key) async {
+  SharedPreferences prefs = await streakData.prefs;
+  streaks.clear();
+  Map<String, dynamic> json;
+  for (int i = 0; i < prefs.getStringList(key)!.length; i++) {
+    json = jsonDecode(prefs.getStringList(key)![i]);
+    streaks.add(StreakData(
+        name: json["name"],
+        streakCount: json["streakCount"],
+        schedule: Schedule.fromJson(json["schedule"]),
+        days: Days.fromJson(json["days"]),
+        month: json["month"],
+        dayOfMonth: json["dayOfMonth"],
+    ));
   }
-  catch(e) {
-    return -1;
-  }
+}
   // final file = await _localFile;
   // String contents = await file.readAsString();
   //
@@ -56,4 +63,3 @@ Future<int> ReadStreaks(String key) async {
   //   // If encountering an error, return 0
   //   return "bad things";
   // }
-}

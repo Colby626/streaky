@@ -161,7 +161,7 @@ class StreakPopupState extends State<StreakPopup>{
               });
             },
             child: const Text("Create")
-        )
+        ),
       ],
     );
   }

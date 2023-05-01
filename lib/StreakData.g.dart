@@ -13,7 +13,6 @@ StreakData _$StreakDataFromJson(Map<String, dynamic> json) => StreakData(
       days: $enumDecodeNullable(_$DaysEnumMap, json['days']) ?? Days.Monday,
       dayOfMonth: json['dayOfMonth'] as int? ?? 1,
       month: json['month'] as int? ?? 1,
-      streakDone: json['streakDone'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$StreakDataToJson(StreakData instance) =>
@@ -24,7 +23,6 @@ Map<String, dynamic> _$StreakDataToJson(StreakData instance) =>
       'dayOfMonth': instance.dayOfMonth,
       'month': instance.month,
       'streakCount': instance.streakCount,
-      'streakDone': instance.streakDone,
     };
 
 const _$ScheduleEnumMap = {

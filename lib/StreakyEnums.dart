@@ -3,7 +3,10 @@ enum Schedule {
   Daily,
   Weekly,
   Monthly,
-  Yearly,
+  Yearly;
+
+  String toJson() => name;
+  static Schedule fromJson(String json) => values.byName(json);
 }
 
 enum Days {
@@ -13,5 +16,8 @@ enum Days {
   Thursday,
   Friday,
   Saturday,
-  Sunday,
+  Sunday;
+
+  String toJson() => name;
+  static Days fromJson(String json) => values.byName(json);
 }

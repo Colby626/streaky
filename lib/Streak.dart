@@ -28,14 +28,19 @@ class Streak extends StatelessWidget{
             {
               if (streakData.streaks[i].name == name)
                 {
-                  if (!streakData.streaks[i].streakDone) //streakCount hasn't been increased in its scheduled period already
+                  if (DateTime.now().difference(streakData.streaks[i].lastButtonPress) > const Duration(seconds: 10))
                       {
                     streakCount++;
                     event.value++;
                     streakData.streaks[i].streakCount++;
-                    streakData.streaks[i].streakDone = true;
+                    streakData.streaks[i].lastButtonPress = DateTime.now();
                     break;
                   }
+                  streakCount++;
+                  event.value++;
+                  streakData.streaks[i].streakCount++;
+                  streakData.streaks[i].lastButtonPress = DateTime.now();
+                  break;
                 }
             }
         },

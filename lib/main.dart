@@ -51,7 +51,6 @@ void callbackDispatcher() {
         if (taskName == streakData.streaks[i].name)
           {
             NotificationManager().simpleNotificationShow(taskName);
-            streakData.streaks[i].streakDone = false;
             break;
           }
       }
@@ -159,10 +158,12 @@ class HomePageState extends State<HomePage> {
       });
     });
     super.initState();
-    FetchStreaks();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      FetchStreaks();
+    });
   }
 
-  Future FetchStreaks() async {
+  void FetchStreaks() async {
     setState(() {
       ReadStreaks("streaks");
       widget.number.value++;
@@ -221,18 +222,18 @@ class HomePageState extends State<HomePage> {
                             Widget? child) {
                           return Column(
                             children: [
-                              FutureBuilder(
-                                future: ReadStreaks("streaks"),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<int> snap) {
-                                  if (snap.hasData) {
-                                    return Text('${snap.data}');
-                                  }
-                                  else {
-                                    return const Text("no");
-                                  }
-                                },
-                              ),
+                              // FutureBuilder(
+                              //   future: ReadStreaks("streaks"),
+                              //   builder: (BuildContext context,
+                              //       AsyncSnapshot<int> snap) {
+                              //     if (snap.hasData) {
+                              //       return Text('${snap.data}');
+                              //     }
+                              //     else {
+                              //       return const Text("no");
+                              //     }
+                              //   },
+                              // ),
                               for (int i = 0; i < streakData.streaks.length; i++)
                                 Streak(streakData.streaks[i].name, streakData
                                     .streaks[i].streakCount, Icons
