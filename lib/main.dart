@@ -46,7 +46,7 @@ void callbackDispatcher() {
     // initialise settings for both Android and iOS device.
     var settings = const InitializationSettings();
     flip.initialize(settings);
-
+    developer.log(streakData.streaks.length.toString());
     for (int i = 0; i < streakData.streaks.length; i++)
       {
         if (taskName == streakData.streaks[i].name)
@@ -64,6 +64,20 @@ class StartPage extends StatefulWidget {
   _StartPageState createState() => _StartPageState();
 }
 class _StartPageState extends State<StartPage> {
+bool isGranted = false;
+@override
+void initState() {
+  super.initState();
+  CheckPerms();
+}
+
+void CheckPerms() async {
+  final status = await Permission.notification.request();
+  if (status.isGranted){
+    Navigator.pushNamed(context, '/HomePage');
+  }
+}
+
 @override
 Widget build(BuildContext context) {
   return Scaffold(
@@ -71,17 +85,40 @@ Widget build(BuildContext context) {
       title: const Text('Streaky'),
     ),
     body: Center(
-      child: ElevatedButton(
-        child: const Text('Enable Notifications'),
-        onPressed: () {
-          _showPermissionDialog();
-        },
-      ),
+        child: AlertDialog(
+          insetPadding: const EdgeInsets.all(20),
+          title: const Text("Enable Notifications"),
+          content: const Text(
+              'This app needs permission to send notifications.'),
+          actions: [
+            TextButton(
+              child: const Text('Disable'),
+              onPressed: () => Navigator.pop(context),
+            ),
+
+            TextButton(
+                onPressed: () async {
+                  Navigator.pushNamed(context, '/HomePage');
+                  final status = await Permission.notification.request();
+                  if (status.isPermanentlyDenied) {
+                    _showSettingsDialog();
+                  }
+                },
+                child: const Text("Enable")
+            ),
+          ],
+        ) //ElevatedButton(
+      //   child: const Text('Enable Notifications'),
+      //   onPressed: () {
+      //     _showPermissionDialog();
+      //   },
+      // ),
     ),
   );
 }
   Future<void> requestNotificationPermissions() async {
     final status = await Permission.notification.request();
+    isGranted = status == PermissionStatus.granted;
     if (status.isDenied) {
       _showPermissionDialog();
     } else if (status.isPermanentlyDenied) {
@@ -97,11 +134,11 @@ Widget build(BuildContext context) {
         content: const Text('This app needs permission to send notifications.'),
         actions: [
           TextButton(
-            child: const Text('CANCEL'),
+            child: const Text('Disable'),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            child: const Text('OK'),
+            child: const Text('Enable'),
             onPressed: () async {
               Navigator.pushNamed(context, '/HomePage');
               final status = await Permission.notification.request();

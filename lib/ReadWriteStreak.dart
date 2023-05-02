@@ -35,12 +35,10 @@ void WriteStreak(String key) async {
 void WriteSettings(String key, bool theme) async {
   SharedPreferences prefs = await streakData.prefs;
   prefs.setBool(key, theme);
-  developer.log("Message: ${prefs.getBool(key).toString()}");
 }
 
 Future<bool> ReadSettings(String key) async {
   SharedPreferences prefs = await streakData.prefs;
-  developer.log("Reading: ${prefs.getBool(key)}");
   return Future<bool>.value(prefs.getBool(key));
 }
 

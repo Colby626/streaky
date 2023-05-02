@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:streaky/ReadWriteStreak.dart';
 import 'package:streaky/delete_menu.dart';
@@ -124,7 +125,15 @@ class Streak extends StatelessWidget{
             const SizedBox(width: 30,),
             Align(
                 alignment: Alignment.center,
-                child: Text(name, style: const TextStyle(color: Colors.amber, fontSize: 34))
+                child: SizedBox(
+                  width: 100,
+                  height: 140,
+                  child: AutoSizeText(
+                    name,
+                    style: const TextStyle(color: Colors.amber, fontSize: 34),
+                    maxLines: 3,
+                  ),
+                )//Text(name, style: const TextStyle(color: Colors.amber, fontSize: 34))
             ),
             const SizedBox(width: 30),
               Align(
