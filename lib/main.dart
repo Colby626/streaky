@@ -45,7 +45,10 @@ void callbackDispatcher() {
     // initialise settings for both Android and iOS device.
     var settings = const InitializationSettings();
     flip.initialize(settings);
-
+    developer.log("Before: ${streakData.streaks.length.toString()}");
+    await ReadStreaks("streaks");
+    developer.log("After: ${streakData.streaks.length.toString()}");
+    developer.log(streakData.streaks.length.toString());
     for (int i = 0; i < streakData.streaks.length; i++)
       {
         if (taskName == streakData.streaks[i].name)
