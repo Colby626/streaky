@@ -11,4 +11,14 @@ class MyTheme with ChangeNotifier{
     _isDark = !_isDark;
     notifyListeners();
   }
+
+  void changeTheme(bool value){
+    if (value){
+      _isDark = true;
+    }
+    else{
+      _isDark = false;
+    }
+    notifyListeners();
+  }
 }

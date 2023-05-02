@@ -11,6 +11,7 @@ import 'StreakData.dart' as streakData;
 import 'SettingsMenu.dart';
 import 'calendar_view.dart';
 import 'config.dart';
+import 'dart:developer' as developer;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -151,6 +152,8 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
 
+  bool theme = true;
+
   @override
   void initState() {
     currentTheme.addListener((){
@@ -161,6 +164,14 @@ class HomePageState extends State<HomePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
       FetchStreaks();
+      FetchSettings();
+    });
+  }
+
+  void FetchSettings() async {
+    theme = await ReadSettings("theme");
+    setState(() {
+      currentTheme.changeTheme(theme);
     });
   }
 

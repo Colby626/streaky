@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:streaky/ReadWriteStreak.dart';
 import 'package:streaky/config.dart';
-//import 'package:streaky/ThemeModeSwitch.dart';
+import 'package:streaky/StreakData.dart';
+import 'dart:developer' as developer;
 
 class SettingsMenu extends StatelessWidget{
   SettingsMenu(
@@ -14,17 +16,17 @@ class SettingsMenu extends StatelessWidget{
     return Drawer(
       width: 200,
       child: ListView(
-        children:  [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
-            child: Align(
-              alignment: Alignment.center,
-              child: Text("Settings", style: TextStyle(fontSize: 37, color: Colors.white),),
-            )
+        children: const [
+          DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text("Settings", style: TextStyle(fontSize: 37, color: Colors.white),),
+              )
           ),
-          const Align(
+          Align(
             alignment: Alignment.center,
             child: Text("Theme Mode"),
           ),
@@ -47,6 +49,23 @@ class _SwitchExampleState extends State<SwitchExample>
   bool light = true;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      FetchSettings();
+    });
+  }
+
+  void FetchSettings() async {
+    light = await ReadSettings("theme");
+    setState(() {
+      currentTheme.changeTheme(light);
+      // developer.log("Before: $light");
+      // developer.log("Settings: $light");
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Switch(
       value: light,
@@ -55,6 +74,7 @@ class _SwitchExampleState extends State<SwitchExample>
         currentTheme.switchThemes();
         setState(() {
           light = value;
+          WriteSettings("theme", light);
         });
       },
     );

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streaky/StreakData.dart' as streakData;
+import 'package:streaky/config.dart';
 import 'StreakData.dart';
 import 'dart:developer' as developer;
 import 'main.dart';
@@ -29,6 +30,18 @@ void WriteStreak(String key) async {
   }
   prefs.setStringList(key, streaksAsStrings);
   number.value++;
+}
+
+void WriteSettings(String key, bool theme) async {
+  SharedPreferences prefs = await streakData.prefs;
+  prefs.setBool(key, theme);
+  developer.log("Message: ${prefs.getBool(key).toString()}");
+}
+
+Future<bool> ReadSettings(String key) async {
+  SharedPreferences prefs = await streakData.prefs;
+  developer.log("Reading: ${prefs.getBool(key)}");
+  return Future<bool>.value(prefs.getBool(key));
 }
 
 Future ReadStreaks(String key) async {
