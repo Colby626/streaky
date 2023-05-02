@@ -39,7 +39,7 @@ void WriteSettings(String key, bool theme) async {
 
 Future<bool> ReadSettings(String key) async {
   SharedPreferences prefs = await streakData.prefs;
-  return Future<bool>.value(prefs.getBool(key));
+  return Future<bool>.value(prefs.getBool(key)!);
 }
 
 Future ReadStreaks(String key) async {

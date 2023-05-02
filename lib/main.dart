@@ -48,21 +48,26 @@ void callbackDispatcher() {
     var settings = const InitializationSettings();
     flip.initialize(settings);
     developer.log("Before: ${streakData.streaks.length.toString()}");
-    //await ReadStreaks("streaks");
+    await ReadStreaks("streaks");
     developer.log("After: ${streakData.streaks.length.toString()}");
     developer.log(streakData.streaks.length.toString());
     for (int i = 0; i < streakData.streaks.length; i++)
       {
         if (taskName == streakData.streaks[i].name)
           {
+            streakData.streaks[i].streakDone = false;
             if (!streakData.streaks[i].streakDone)
               {
                 streakData.streaks[i].streakCount = 0;
               }
             NotificationManager().simpleNotificationShow(taskName);
             streakData.streaks[i].streakDone = false;
-            number.value++;
             WriteStreak("streaks");
+            await ReadStreaks("streaks");
+            developer.log(streakData.streaks[0].streakCount.toString());
+            //streak.event.value++;
+            number.value++;
+
             break;
           }
       }
