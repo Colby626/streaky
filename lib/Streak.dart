@@ -30,18 +30,53 @@ class Streak extends StatelessWidget{
             {
               if (streakData.streaks[i].name == name)
                 {
-                  if (DateTime.now().difference(streakData.streaks[i].lastButtonPress) > const Duration(seconds: 10))
+                  switch (frequency)
+                  {
+                    case 'Daily':
                       {
-                    streakCount++;
-                    event.value++;
-                    streakData.streaks[i].streakCount++;
-                    streakData.streaks[i].lastButtonPress = DateTime.now();
-                    break;
+                        if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inDays > const Duration(days: 1).inDays)
+                        {
+                          streakCount++;
+                          event.value++;
+                          streakData.streaks[i].streakCount++;
+                          streakData.streaks[i].lastButtonPress = DateTime.now();
+                        }
+                        break;
+                      }
+                    case 'Weekly':
+                      {
+                        if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inDays > const Duration(days: 7).inDays)
+                        {
+                          streakCount++;
+                          event.value++;
+                          streakData.streaks[i].streakCount++;
+                          streakData.streaks[i].lastButtonPress = DateTime.now();
+                        }
+                        break;
+                      }
+                    case 'Monthly':
+                      {
+                        if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inDays > const Duration(days: 31).inDays)
+                        {
+                          streakCount++;
+                          event.value++;
+                          streakData.streaks[i].streakCount++;
+                          streakData.streaks[i].lastButtonPress = DateTime.now();
+                        }
+                        break;
+                      }
+                    case 'Yearly':
+                      {
+                        if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inDays > const Duration(days: 365).inDays)
+                        {
+                          streakCount++;
+                          event.value++;
+                          streakData.streaks[i].streakCount++;
+                          streakData.streaks[i].lastButtonPress = DateTime.now();
+                        }
+                        break;
+                      }
                   }
-                  streakCount++;
-                  event.value++;
-                  streakData.streaks[i].streakCount++;
-                  streakData.streaks[i].lastButtonPress = DateTime.now();
                   break;
                 }
             }
