@@ -49,13 +49,12 @@ class StreakState extends State<Streak>{
                 {
                   case 'Daily':
                     {
-                      if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inSeconds > const Duration(seconds: 5).inSeconds)
+                      if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inDays > const Duration(days: 1).inDays)
                       {
                         streakData.streaks[i].streakCount++;
                         streakData.streaks[i].lastButtonPress = DateTime.now();
                         streakData.streaks[i].streakDone = true;
                         WriteStreak("streaks");
-                        Workmanager().registerOneOffTask(widget.name,widget.name, initialDelay: const Duration(seconds: 5));
                       }
                       break;
                     }

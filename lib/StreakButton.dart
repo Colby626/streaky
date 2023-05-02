@@ -137,7 +137,7 @@ class StreakPopupState extends State<StreakPopup>{
                 {
                   case Schedule.Daily:
                     {
-                      //Workmanager().registerPeriodicTask(nameController.text, nameController.text, initialDelay: const Duration (days: 1)); will uncomment
+                      Workmanager().registerPeriodicTask(nameController.text, nameController.text, initialDelay: const Duration (days: 1));
                     }
                     break;
                   case Schedule.Weekly:

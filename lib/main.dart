@@ -50,7 +50,6 @@ void callbackDispatcher() {
       {
         if (taskName == streakData.streaks[i].name)
           {
-            streakData.streaks[i].streakDone = false;
             if (!streakData.streaks[i].streakDone)
               {
                 streakData.streaks[i].streakCount = 0;
