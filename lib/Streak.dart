@@ -3,19 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:streaky/ReadWriteStreak.dart';
 import 'package:workmanager/workmanager.dart';
 import 'StreakData.dart' as streakData;
-import 'dart:developer' as developer;
 
 class Streak extends StatefulWidget{
   Streak(
       this.name,
-      this.streakCount,
       this.streakIcon,
       this.frequency,
       {Key? key}
       ) : super(key: key);
 
   final String name;
-  int streakCount;
   final IconData streakIcon;
   final String frequency;
   final event = ValueNotifier(0);
@@ -31,10 +28,9 @@ class StreakState extends State<Streak>{
   }
 
   void FetchStreaks() async {
+    await ReadStreaks("streaks");
     setState(() {
-      ReadStreaks("streaks");
       widget.event.value++;
-      developer.log("Streak ${streakData.streaks[0].streakCount}");
     });
   }
 
@@ -55,13 +51,11 @@ class StreakState extends State<Streak>{
                     {
                       if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inSeconds > const Duration(seconds: 5).inSeconds)
                       {
-                        //streakCount++;
                         streakData.streaks[i].streakCount++;
                         streakData.streaks[i].lastButtonPress = DateTime.now();
                         streakData.streaks[i].streakDone = true;
                         WriteStreak("streaks");
                         Workmanager().registerOneOffTask(widget.name,widget.name, initialDelay: const Duration(seconds: 5));
-                        widget.event.value++;
                       }
                       break;
                     }
@@ -69,12 +63,10 @@ class StreakState extends State<Streak>{
                     {
                       if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inDays > const Duration(days: 7).inDays)
                       {
-                        //streakCount++;
                         streakData.streaks[i].streakCount++;
                         streakData.streaks[i].lastButtonPress = DateTime.now();
                         streakData.streaks[i].streakDone = true;
                         WriteStreak("streaks");
-                        widget.event.value++;
                       }
                       break;
                     }
@@ -82,12 +74,10 @@ class StreakState extends State<Streak>{
                     {
                       if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inDays > const Duration(days: 31).inDays)
                       {
-                        //streakCount++;
                         streakData.streaks[i].streakCount++;
                         streakData.streaks[i].lastButtonPress = DateTime.now();
                         streakData.streaks[i].streakDone = true;
                         WriteStreak("streaks");
-                        widget.event.value++;
                       }
                       break;
                     }
@@ -95,12 +85,10 @@ class StreakState extends State<Streak>{
                     {
                       if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inDays > const Duration(days: 365).inDays)
                       {
-                        //streakCount++;
                         streakData.streaks[i].streakCount++;
                         streakData.streaks[i].lastButtonPress = DateTime.now();
                         streakData.streaks[i].streakDone = true;
                         WriteStreak("streaks");
-                        widget.event.value++;
                       }
                       break;
                     }
@@ -147,7 +135,6 @@ class StreakState extends State<Streak>{
                       return Text(streakData.streaks.singleWhere((element) => element.name == widget.name).streakCount.toString(), style: const TextStyle(color: Colors.amber, fontSize: 34));
                     }
                 ),
-                //child: Text(streakCount.toString(), style: const TextStyle(color: Colors.amber, fontSize: 34)),
               ),
               const SizedBox(width: 30,),
               Align(
@@ -161,7 +148,7 @@ class StreakState extends State<Streak>{
                       maxLines: 3,
                       textDirection: TextDirection.rtl,
                     ),
-                  )//Text(name, style: const TextStyle(color: Colors.amber, fontSize: 34))
+                  )
               ),
               const SizedBox(width: 30),
               Align(

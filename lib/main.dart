@@ -11,7 +11,6 @@ import 'StreakData.dart' as streakData;
 import 'SettingsMenu.dart';
 import 'calendar_view.dart';
 import 'config.dart';
-import 'dart:developer' as developer;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -36,7 +35,6 @@ void main() {
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((taskName, inputData) async {
-    developer.log("test");
     // initialise the plugin of flutter_local_notifications.
     FlutterLocalNotificationsPlugin flip = FlutterLocalNotificationsPlugin();
 
@@ -47,10 +45,7 @@ void callbackDispatcher() {
     // initialise settings for both Android and iOS device.
     var settings = const InitializationSettings();
     flip.initialize(settings);
-    developer.log("Before: ${streakData.streaks.length.toString()}");
     await ReadStreaks("streaks");
-    developer.log("After: ${streakData.streaks.length.toString()}");
-    developer.log(streakData.streaks.length.toString());
     for (int i = 0; i < streakData.streaks.length; i++)
       {
         if (taskName == streakData.streaks[i].name)
@@ -64,10 +59,7 @@ void callbackDispatcher() {
             streakData.streaks[i].streakDone = false;
             WriteStreak("streaks");
             await ReadStreaks("streaks");
-            developer.log(streakData.streaks[0].streakCount.toString());
-            //streak.event.value++;
             number.value++;
-
             break;
           }
       }
@@ -287,21 +279,8 @@ class HomePageState extends State<HomePage> {
                             Widget? child) {
                           return Column(
                             children: [
-                              // FutureBuilder(
-                              //   future: ReadStreaks("streaks"),
-                              //   builder: (BuildContext context,
-                              //       AsyncSnapshot<int> snap) {
-                              //     if (snap.hasData) {
-                              //       return Text('${snap.data}');
-                              //     }
-                              //     else {
-                              //       return const Text("no");
-                              //     }
-                              //   },
-                              // ),
                               for (int i = 0; i < streakData.streaks.length; i++)
-                                Streak(streakData.streaks[i].name, streakData
-                                    .streaks[i].streakCount, Icons
+                                Streak(streakData.streaks[i].name, Icons
                                     .access_time_filled, streakData.streaks[i].schedule.name),
                             ],
                           );
