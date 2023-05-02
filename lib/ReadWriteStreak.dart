@@ -48,14 +48,18 @@ Future ReadStreaks(String key) async {
   Map<String, dynamic> json;
   for (int i = 0; i < prefs.getStringList(key)!.length; i++) {
     json = jsonDecode(prefs.getStringList(key)![i]);
-    streaks.add(StreakData(
+    StreakData newStreak = StreakData(
         name: json["name"],
         streakCount: json["streakCount"],
         schedule: Schedule.fromJson(json["schedule"]),
         days: Days.fromJson(json["days"]),
         month: json["month"],
         dayOfMonth: json["dayOfMonth"],
-    ));
+        streakDone: json["streakDone"]
+    );
+    newStreak.lastButtonPress = DateTime.tryParse(json["lastButtonPress"])!;
+
+    streakData.streaks.add(newStreak);
   }
 }
   // final file = await _localFile;

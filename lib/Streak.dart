@@ -35,13 +35,14 @@ class Streak extends StatelessWidget{
                   {
                     case 'Daily':
                       {
-                        if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inDays > const Duration(days: 1).inDays)
+                        if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inSeconds > const Duration(seconds: 5).inSeconds)
                         {
                           streakCount++;
                           streakData.streaks[i].streakCount++;
                           streakData.streaks[i].lastButtonPress = DateTime.now();
                           streakData.streaks[i].streakDone = true;
                           WriteStreak("streaks");
+                          Workmanager().registerOneOffTask(name,name, initialDelay: const Duration(seconds: 5));
                           event.value++;
                         }
                         break;
@@ -135,11 +136,12 @@ class Streak extends StatelessWidget{
                 alignment: Alignment.center,
                 child: SizedBox(
                   width: 100,
-                  height: 140,
+                  height: 40,
                   child: AutoSizeText(
                     name,
                     style: const TextStyle(color: Colors.amber, fontSize: 34),
                     maxLines: 3,
+                    textDirection: TextDirection.rtl,
                   ),
                 )//Text(name, style: const TextStyle(color: Colors.amber, fontSize: 34))
             ),

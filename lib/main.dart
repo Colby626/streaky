@@ -11,6 +11,7 @@ import 'StreakData.dart' as streakData;
 import 'SettingsMenu.dart';
 import 'calendar_view.dart';
 import 'config.dart';
+import 'dart:developer' as developer;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -35,6 +36,7 @@ void main() {
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((taskName, inputData) async {
+    developer.log("test");
     // initialise the plugin of flutter_local_notifications.
     FlutterLocalNotificationsPlugin flip = FlutterLocalNotificationsPlugin();
 
@@ -46,7 +48,7 @@ void callbackDispatcher() {
     var settings = const InitializationSettings();
     flip.initialize(settings);
     developer.log("Before: ${streakData.streaks.length.toString()}");
-    await ReadStreaks("streaks");
+    //await ReadStreaks("streaks");
     developer.log("After: ${streakData.streaks.length.toString()}");
     developer.log(streakData.streaks.length.toString());
     for (int i = 0; i < streakData.streaks.length; i++)
@@ -59,6 +61,7 @@ void callbackDispatcher() {
               }
             NotificationManager().simpleNotificationShow(taskName);
             streakData.streaks[i].streakDone = false;
+            number.value++;
             WriteStreak("streaks");
             break;
           }

@@ -6,7 +6,7 @@ part 'StreakData.g.dart';
 @JsonSerializable()
 class StreakData
 {
-  StreakData({required this.name, required this.streakCount, required this.schedule, this.days = Days.Monday, this.dayOfMonth = 1, this.month = 1}); //{required this.streakCount}, {required this.schedule}, {this.days = Days.Monday, this.dayOfMonth = 1, this.month = 1});
+  StreakData({required this.name, required this.streakCount, required this.schedule, this.days = Days.Monday, this.dayOfMonth = 1, this.month = 1, this.streakDone = false}); //{required this.streakCount}, {required this.schedule}, {this.days = Days.Monday, this.dayOfMonth = 1, this.month = 1});
   String name = "";
   Schedule schedule = Schedule.Daily;
   Days days = Days.Monday; //Days defaults to monday because it may not be necessary for every type of recurrence
@@ -19,6 +19,22 @@ class StreakData
   Map<String, dynamic> toJson() => _$StreakDataToJson(this);
 
   factory StreakData.fromJson(Map<String, dynamic> json) => _$StreakDataFromJson(json);
+}
+
+class CustomDateTimeConverter implements JsonConverter<DateTime, String> {
+  const CustomDateTimeConverter();
+
+  @override
+  DateTime fromJson(String json) {
+    if (json.contains(".")) {
+      json = json.substring(0, json.length - 1);
+    }
+
+    return DateTime.parse(json);
+  }
+
+  @override
+  String toJson(DateTime json) => json.toIso8601String();
 }
 
 Future<SharedPreferences> prefs = SharedPreferences.getInstance();
