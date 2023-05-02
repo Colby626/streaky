@@ -145,7 +145,7 @@ class StreakState extends State<Streak>{
                       widget.name,
                       style: const TextStyle(color: Colors.amber, fontSize: 34),
                       maxLines: 3,
-                      textDirection: TextDirection.rtl,
+                      textDirection: TextDirection.ltr,
                     ),
                   )
               ),
