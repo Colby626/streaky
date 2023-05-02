@@ -13,6 +13,7 @@ class StreakData
   int dayOfMonth = 1; //dayOfMonth defaults to 1 because it may not be necessary for every type of recurrence
   int month = 1; //month defaults to 1 because it may not be necessary for every type of recurrence
   int streakCount = 0;
+  bool streakDone = false;
   DateTime lastButtonPress = DateTime.now().subtract(const Duration(days: 365));
 
   Map<String, dynamic> toJson() => _$StreakDataToJson(this);

@@ -38,9 +38,11 @@ class Streak extends StatelessWidget{
                         if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inDays > const Duration(days: 1).inDays)
                         {
                           streakCount++;
-                          event.value++;
                           streakData.streaks[i].streakCount++;
                           streakData.streaks[i].lastButtonPress = DateTime.now();
+                          streakData.streaks[i].streakDone = true;
+                          WriteStreak("streaks");
+                          event.value++;
                         }
                         break;
                       }
@@ -49,9 +51,11 @@ class Streak extends StatelessWidget{
                         if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inDays > const Duration(days: 7).inDays)
                         {
                           streakCount++;
-                          event.value++;
                           streakData.streaks[i].streakCount++;
                           streakData.streaks[i].lastButtonPress = DateTime.now();
+                          streakData.streaks[i].streakDone = true;
+                          WriteStreak("streaks");
+                          event.value++;
                         }
                         break;
                       }
@@ -60,9 +64,11 @@ class Streak extends StatelessWidget{
                         if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inDays > const Duration(days: 31).inDays)
                         {
                           streakCount++;
-                          event.value++;
                           streakData.streaks[i].streakCount++;
                           streakData.streaks[i].lastButtonPress = DateTime.now();
+                          streakData.streaks[i].streakDone = true;
+                          WriteStreak("streaks");
+                          event.value++;
                         }
                         break;
                       }
@@ -71,9 +77,11 @@ class Streak extends StatelessWidget{
                         if (DateTime.now().difference(streakData.streaks[i].lastButtonPress).inDays > const Duration(days: 365).inDays)
                         {
                           streakCount++;
-                          event.value++;
                           streakData.streaks[i].streakCount++;
                           streakData.streaks[i].lastButtonPress = DateTime.now();
+                          streakData.streaks[i].streakDone = true;
+                          WriteStreak("streaks");
+                          event.value++;
                         }
                         break;
                       }

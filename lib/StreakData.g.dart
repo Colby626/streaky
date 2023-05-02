@@ -13,7 +13,9 @@ StreakData _$StreakDataFromJson(Map<String, dynamic> json) => StreakData(
       days: $enumDecodeNullable(_$DaysEnumMap, json['days']) ?? Days.Monday,
       dayOfMonth: json['dayOfMonth'] as int? ?? 1,
       month: json['month'] as int? ?? 1,
-    )..lastButtonPress = DateTime.parse(json['lastButtonPress'] as String);
+    )
+      ..streakDone = json['streakDone'] as bool
+      ..lastButtonPress = DateTime.parse(json['lastButtonPress'] as String);
 
 Map<String, dynamic> _$StreakDataToJson(StreakData instance) =>
     <String, dynamic>{
@@ -23,6 +25,7 @@ Map<String, dynamic> _$StreakDataToJson(StreakData instance) =>
       'dayOfMonth': instance.dayOfMonth,
       'month': instance.month,
       'streakCount': instance.streakCount,
+      'streakDone': instance.streakDone,
       'lastButtonPress': instance.lastButtonPress.toIso8601String(),
     };
 

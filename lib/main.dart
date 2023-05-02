@@ -11,7 +11,6 @@ import 'StreakData.dart' as streakData;
 import 'SettingsMenu.dart';
 import 'calendar_view.dart';
 import 'config.dart';
-import 'dart:developer' as developer;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -46,12 +45,18 @@ void callbackDispatcher() {
     // initialise settings for both Android and iOS device.
     var settings = const InitializationSettings();
     flip.initialize(settings);
-    developer.log(streakData.streaks.length.toString());
+
     for (int i = 0; i < streakData.streaks.length; i++)
       {
         if (taskName == streakData.streaks[i].name)
           {
+            if (!streakData.streaks[i].streakDone)
+              {
+                streakData.streaks[i].streakCount = 0;
+              }
             NotificationManager().simpleNotificationShow(taskName);
+            streakData.streaks[i].streakDone = false;
+            WriteStreak("streaks");
             break;
           }
       }
