@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:streaky/ReadWriteStreak.dart';
-import 'package:streaky/delete_menu.dart';
 import 'package:workmanager/workmanager.dart';
 import 'StreakData.dart' as streakData;
 
