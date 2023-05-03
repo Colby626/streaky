@@ -184,7 +184,7 @@ class StreakButton extends StatelessWidget{
           height: 100,
           width: double.infinity,
           child: ElevatedButton(
-            child: Text(name),
+            child: Text(name, style: const TextStyle(fontSize: 24),),
             onPressed: (){
               showDialog(
                 context: context,
