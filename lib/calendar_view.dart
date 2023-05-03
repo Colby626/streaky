@@ -65,7 +65,7 @@ class _AppointmentDataSource extends CalendarDataSource {
   }
 }
 
-RecurrenceProperties RecurranceData(streakData) //Will need Days day and DayOfMonth dayOfMonth and Month month
+RecurrenceProperties RecurranceData(streakData)
 {
   RecurrenceProperties properties = RecurrenceProperties(startDate: DateTime.now());
 

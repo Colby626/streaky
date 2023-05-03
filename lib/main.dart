@@ -46,11 +46,11 @@ void callbackDispatcher() {
     var settings = const InitializationSettings();
     flip.initialize(settings);
     await ReadStreaks("streaks");
-    for (int i = 0; i < streakData.streaks.length; i++)
+    for (int i = 0; i < streakData.streaks.length; i++) //Finds the streak from the list of streaks that has the unique name the same as the workmanager task
       {
         if (taskName == streakData.streaks[i].name)
           {
-            if (!streakData.streaks[i].streakDone)
+            if (!streakData.streaks[i].streakDone) //They lost their streak
               {
                 streakData.streaks[i].streakCount = 0;
               }
@@ -58,7 +58,7 @@ void callbackDispatcher() {
             streakData.streaks[i].streakDone = false;
             WriteStreak("streaks");
             await ReadStreaks("streaks");
-            number.value++;
+            number.value++; //Updates the value on the streaks
             break;
           }
       }
@@ -78,7 +78,7 @@ void initState() {
   CheckPerms();
 }
 
-void CheckPerms() async {
+void CheckPerms() async { //Checks if permission to send notifications is enabled for the app and if it is goes to the homepage, otherwise goes to the start screen which asks for permission
   final status = await Permission.notification.request();
   if (status.isGranted){
     Navigator.pushNamed(context, '/HomePage');
@@ -202,7 +202,6 @@ class HomePageState extends State<HomePage> {
   void initState() {
     currentTheme.addListener((){
       setState(() {
-
       });
     });
     super.initState();

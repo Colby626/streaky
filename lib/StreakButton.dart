@@ -7,8 +7,8 @@ import 'StreakData.dart' as streakData;
 import 'ReadWriteStreak.dart';
 
 TextEditingController nameController = TextEditingController();
-TextEditingController monthController = TextEditingController();
-TextEditingController yearController = TextEditingController();
+TextEditingController monthController = TextEditingController(); //Actually controls the days of a month
+TextEditingController yearController = TextEditingController(); //Actually controls the months
 
 Days selectedDay = Days.Monday;
 
@@ -133,7 +133,7 @@ class StreakPopupState extends State<StreakPopup>{
                     );
                   }
                 WriteStreak("streaks");
-                switch(selectedSchedule)
+                switch(selectedSchedule) //Workmanager periodic tasks will run in the background even if the app is closed, ours send a notification
                 {
                   case Schedule.Daily:
                     {

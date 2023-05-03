@@ -11,18 +11,7 @@ import 'main.dart';
 
 import 'StreakyEnums.dart';
 
-// Future<String> get _localPath async {
-//   final directory = await getApplicationDocumentsDirectory();
-//
-//   return directory.path;
-// }
-//
-// Future<File> get _localFile async {
-//   final path = await _localPath;
-//   return File('$path/streaks.json');
-// }
-
-void WriteStreak(String key) async {
+void WriteStreak(String key) async { //Saves data to Json
   SharedPreferences prefs = await streakData.prefs;
   List<String> streaksAsStrings = [];
   for(StreakData streak in streaks){
@@ -37,7 +26,7 @@ void WriteSettings(String key, bool theme) async {
   prefs.setBool(key, theme);
 }
 
-Future<bool> ReadSettings(String key) async {
+Future<bool> ReadSettings(String key) async { //Pulls data from Json
   SharedPreferences prefs = await streakData.prefs;
   return Future<bool>.value(prefs.getBool(key)!);
 }
@@ -62,21 +51,3 @@ Future ReadStreaks(String key) async {
     streakData.streaks.add(newStreak);
   }
 }
-  // final file = await _localFile;
-  // String contents = await file.readAsString();
-  //
-  // try {
-  //   final file = await _localFile;
-  //
-  //   // Read the file
-  //    contents = await file.readAsString();
-  //    StreakData streak;
-  //    streak = json.decode(contents);
-  //    print(streak.name);
-  //   //streakData.streaks.add(json.decode(contents).map((data) => StreakData.fromJson(data)));
-  //   return contents;
-  //
-  // } catch (e) {
-  //   // If encountering an error, return 0
-  //   return "bad things";
-  // }

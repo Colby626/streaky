@@ -23,7 +23,7 @@ class NotificationManager {
     );
   }
 
-  Future<void> simpleNotificationShow(String name) async {
+  Future<void> simpleNotificationShow(String name) async { //This is the only one that we are using
     AndroidNotificationDetails androidNotificationDetails =
     AndroidNotificationDetails(name, name,
         priority: Priority.high,

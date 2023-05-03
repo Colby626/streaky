@@ -27,7 +27,7 @@ class StreakState extends State<Streak>{
     FetchStreaks();
   }
 
-  void FetchStreaks() async {
+  void FetchStreaks() async { //Pulls from the Json storage
     await ReadStreaks("streaks");
     setState(() {
       widget.event.value++;
@@ -45,7 +45,7 @@ class StreakState extends State<Streak>{
             {
               if (streakData.streaks[i].name == widget.name)
               {
-                switch (widget.frequency)
+                switch (widget.frequency) //Only allows the user to click on the button once per frequency
                 {
                   case 'Daily':
                     {

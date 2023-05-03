@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:streaky/ReadWriteStreak.dart';
 import 'package:streaky/config.dart';
-import 'package:streaky/StreakData.dart';
-import 'dart:developer' as developer;
 
 class SettingsMenu extends StatelessWidget{
   SettingsMenu(
@@ -56,12 +54,10 @@ class _SwitchExampleState extends State<SwitchExample>
     });
   }
 
-  void FetchSettings() async {
+  void FetchSettings() async { //Pulls theme from Json
     light = await ReadSettings("theme");
     setState(() {
       currentTheme.changeTheme(light);
-      // developer.log("Before: $light");
-      // developer.log("Settings: $light");
     });
   }
 
